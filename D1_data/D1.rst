@@ -1,0 +1,66 @@
+.. _pg-D1-Use-cases:
+
+########################
+Deliverable 1: Use-cases
+########################
+
+This page describes the standardized use-cases that were used in defining requirements and responding to the other charge questions.
+They will be referred (and linked) to throughout this report.
+The use-cases are separated into two categories.
+The first set describes the use-cases that exemplify functionalities required to perform on-the-fly analyses and alert users.
+The second set is specific to image display capabilities.
+
+.. _pgD1 Use-cases for On-the-fly Analysis and Reporting:
+
+Use-cases for On-the-fly Analysis and Reporting
+===============================================
+
+The use-cases for on-the-fly reporting are reported in the following subsections.
+They are designed to be as orthogonal as possible but overlap does exist.
+Increased detail is given where a unique requirement is going to result from the use-case.
+General capabilities and existing functionality is given significantly less attention.
+
+
+Mount Jitter Measurement and Reporting
+--------------------------------------
+
+For the moment, the `Jitter use-case is hosted on confluence <https://confluence.lsstcorp.org/pages/viewpage.action?spaceKey=LSSTCOM&title=Mount+Jitter+Use-Case>`_.
+
+This is a response to Question 1, and a reference to :ref:`pgD1 Use case1`.
+
+
+Afternoon Calibration Generation
+--------------------------------
+
+For the moment, the `Afternoon Calibration Generation use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Use+Cases+for+Calibration+Generation>`_.
+
+Automated Fault Report Use-Case
+--------------------------------
+
+For the moment, the `Automated Fault Report Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Automated+Fault+Report+Use-Case>`_.
+This use-case is to emphasize that there will be a demand for running analyses and generating artifacts that are not associated with images.
+
+
+Active Optics System
+--------------------
+
+For the moment, the `Active Optics System Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/pages/viewpage.action?pageId=156512863>`_.
+Much of this use-case was based on use-cases from the DECam Active Optics System.
+
+
+Observer Data Summary Feedback
+------------------------------
+
+Significant input was provided regarding the display of feedback to the observer, many of which were from the Scheduler.
+This was intentionally left for a later date and any specific architectural requirements that came out of this have been incorporated into the other use-cases.
+
+
+
+
+Use-cases for Image Display Capabilities
+========================================
+
+Use-case 3
+----------
+
+This is a response to Question 1, and a reference to :ref:`pgD1 Use case1`.

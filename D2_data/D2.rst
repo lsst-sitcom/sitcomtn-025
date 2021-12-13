@@ -1,0 +1,53 @@
+.. _pg-D2-Requirements:
+
+###########################
+Deliverable 2: Requirements
+###########################
+
+
+
+This page describes the requirements derived from :ref:`pg-D1-Use-cases`.
+
+The requirements are separated into two categories.
+The first set describes the reuirements to facilitate on-the-fly analyses and alert users.
+The second set is specific to image display.
+
+.. _pgD2 Requirements for On-the-fly Analysis and Reporting:
+
+
+For the moment, the requirements are found on `this page of confluence <https://confluence.lsstcorp.org/pages/viewpage.action?spaceKey=LSSTCOM&title=Requirement+Generation>`_.
+
+.. list-table:: Table of Requirements
+   :widths: auto
+   :header-rows: 1
+
+   * - Requirement
+     - Short Description
+     - Phase
+     - Priority
+     - Prerequisite(s)
+   * - CAM-REQ-002
+     - Display cursor in Raft/Sensor/Amplifier
+     - 2
+     - High
+     - None
+   * - 
+     - *Triggers*
+     - 
+     - 
+     - 
+   * - Row 2, column 1
+     - Row 2, column 2
+     - Row 2, column 3
+     - Row 2, column 4
+     - Row 2, column 5
+  
+
+Requirements for On-the-fly Analysis and Reporting
+==================================================
+
+
+
+
+Requirements for Image Display Capabilities
+===========================================
