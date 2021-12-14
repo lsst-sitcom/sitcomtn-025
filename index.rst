@@ -128,14 +128,27 @@ Deliverable 3:
       - Report on their status, limitations, and where their current requirements may need to be expanded to cover any increase in scope
       - Tools which were considered but found to be inadequate must also be reported
 
+Content for this section is found in the `original presentation givent to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`.
 
-Tools:
+
+**Tools**:
 
 - Camera Visualization Tool
 - Watcher
 - faro
+- SAL Scripts
 - OCPS 
 - Nublado Interface (USDF, Summit etc) with Jupyter Notebook Functionality
+- LOVE
+- Chronograph 
+- EFD
+- SAL
+
+**Planned Computing Power:**
+
+- Camera Diagnostic Cluster
+- Commissioning Cluster (ANTU)
+   
 
 .. _Deliverable 4:
 
@@ -178,20 +191,17 @@ Ideally, the Bokeh apps should also be available to people on the RSP?
 Augmenting Current Functionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
 - Camera Visualization tools (as per described in the requirement section above)
 - OCPS must be able to operate in a way that is not only associated with images
 - OCPS needs access to EFD
 
-.. important::
+.. 
+   .. important::
 
-   The mapping and implementation for each use-case assumes that the tools described in `Deliverable 5`_ and the additional required functionalities described in `Deliverable 6`_ have been incorporated.
-   It may be useful to read those sections before this one.
+      The mapping and implementation for each use-case assumes that the tools described in `Deliverable 5`_ and the additional required functionalities described in `Deliverable 6`_ have been incorporated.
+      It may be useful to read those sections before this one.
 
-   The response to this deliverable is found in each of the use-cases.
-
-
-
+      The response to this deliverable is found in each of the use-cases.
 
 .. _Deliverable 5:
 

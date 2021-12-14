@@ -36,15 +36,116 @@ For the moment, the requirements are found on `this page of confluence <https://
      - 
      - 
      - 
-   * - Row 2, column 1
-     - Row 2, column 2
-     - Row 2, column 3
-     - Row 2, column 4
-     - Row 2, column 5
+   * - FAFF-REQ-001_
+     - Support of automated triggers
+     - 
+     - 
+     - 
   
 
 Requirements for On-the-fly Analysis and Reporting
 ==================================================
+
+Triggering Mechanisms Requirements
+----------------------------------
+
+.. _FAFF-REQ-001:
+
+FAFF-REQ-001
+^^^^^^^^^^^^
+
+**Specification**: The project shall provide an automated mechanism to trigger on-the-fly data analysis based on events.
+
+**Rationale**: Telescope performance analysis will occur based on non-image based events (e.g. wind shake, or vibration sensor triggers). 
+
+**Current shortcomings:** The only current tooling to monitor events is the Watcher. It exists to raise alarms but not to trigger processing of data that would then be displayed, or possibly trigger an alarm.
+
+**Applicable Use-cases:**  Automated Fault Report 
+
+**Suggested Implementation to fulfil requirement:** Create a "Catcher" CSC that holds "rules" and sends/monitors processing sent to the OCPS.
+
+
+.. _FAFF-REQ-002:
+
+FAFF-REQ-002
+^^^^^^^^^^^^
+
+**Specification (FAFF-REQ-002):** The project shall provide a mechanism to trigger on-the-fly data analysis based on human selection.
+
+**Rationale:** An analysis tool that is based on a trigger may also produce meaningful output for other use-cases. Having the ability for an operator to manually trigger the analysis+plot displays is useful for when the logic for the automated mechanism is not well captured.
+
+**Current shortcomings:** No current tooling to rapidly trigger an analysis manually. Requires the above requirement to be fulfilled.
+
+**Applicable Use-cases:** Jitter (can trigger when image motion is observed or if other indicator may be present such as manually induced vibration or imbalance)
+
+**Suggested Implementation to fulfil requirement:** Catcher-related analyses could be trigger manually from a LOVE based GUI.
+
+.. _FAFF-REQ-003:
+
+FAFF-REQ-003
+^^^^^^^^^^^^
+
+**Specification:** The project shall provide a service to perform the on-the-fly data processing associated with events and telemetry.
+
+**Rationale:** For image related processing this is the OCPS. However, not all interesting information is image related.
+
+**Current shortcomings:** In current design, can't run OCPS script without some image association, i.e., butler like (expects dataIds). This design could be modified if needed, not a fundamental technical limitation.
+
+**Applicable Use-cases:** Jitter, Automated Fault Report 
+
+**Suggested Implementation to fulfil requirement:** Augment OCPS API, also create a "Catcher CSC" that can send OCPS commands
+
+.. _FAFF-REQ-004:
+
+FAFF-REQ-004
+^^^^^^^^^^^^
+
+**Specification:** The project shall provide a mechanism to monitor the outputs of on-the-fly data processing.
+
+**Rationale:** If the data-processing yields and interesting result, a "service" needs to monitor this and be able to act accordingly.
+
+**Current shortcomings:** This may be possible using the Watcher, but requires a more detailed look as it was not an original use-case.
+
+**Applicable Use-cases:** All
+
+**Suggested Implementation to fulfil requirement:** Create a "Catcher" CSC that holds "rules" and sends/monitors processing sent to the OCPS.
+
+.. _FAFF-REQ-006:
+
+FAFF-REQ-006
+^^^^^^^^^^^^
+
+**Specification:** The project shall provide a mechanism to alert operators when a on-the-fly data-processing produces an interesting result.
+
+**Rationale:** If the data-processing yields and interesting result, a "service" needs to monitor this and be able to act accordingly. Ideally, the alert should provide a link or single-click mechanism to see that result.
+
+**Current shortcomings:** This may be possible using the Watcher, but requires a more detailed look as it was not an original use-case.
+
+**Applicable Use-cases:** Jitter
+
+**Suggested Implementation to fulfil requirement:** Catcher publishes event which is seen by the Watcher, then alerts the user. Or a better solution might be to have the catcher be able to alert, like the watcher can but with increased functionality.
+
+
+.. _FAFF-REQ-007:
+
+FAFF-REQ-007
+^^^^^^^^^^^^
+
+**Specification:** The project shall provide a GUI to display information about finished and running tasks.
+
+**Rationale:** The watcher in it's current implementation only allows a user to acknowledge it and then the task/alert is complete. This is not sufficient for the "Catcher" as it needs to display results/links as well. Furthermore, that result should persist such that if a new result comes in the previous one is not over-written. 
+
+**Current shortcomings:** N/A
+
+**Applicable Use-cases:** Jitter
+
+**Suggested Implementation to fulfil requirement:** Catcher GUI exists and reports the recent results of tasks.
+
+
+Figure Generation Requirements
+==============================
+
+Types of figures that a plotting tool needs to support `are currently found here on Confluence <https://confluence.lsstcorp.org/pages/viewpage.action?pageId=156514273>`_.
 
 
 
