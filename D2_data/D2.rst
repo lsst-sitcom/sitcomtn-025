@@ -12,44 +12,49 @@ The requirements are separated into two categories.
 The first set describes the reuirements to facilitate on-the-fly analyses and alert users.
 The second set is specific to image display.
 
+The priorities are as follows:
+
+- **Immediate:** This needs to be done ASAP as it is impacting current work.
+- **Priority 1:** Necessary to fully implement before on-sky testing with ComCam.
+- **Priority 2:** Necessary to implement before full-camera on-sky testing.
+- **Priority 3:** Required for final delivery.
+
+
 .. _pgD2 Requirements for On-the-fly Analysis and Reporting:
 
 
 For the moment, the requirements are found on `this page of confluence <https://confluence.lsstcorp.org/pages/viewpage.action?spaceKey=LSSTCOM&title=Requirement+Generation>`_.
 
-.. list-table:: Table of Requirements
-   :widths: auto
-   :header-rows: 1
+.. 
+    .. list-table:: Table of FAFF Generated Requirements
+    :widths: auto
+    :header-rows: 1
 
-   * - Requirement
-     - Short Description
-     - Phase
-     - Priority
-     - Prerequisite(s)
-   * - CAM-REQ-002
-     - Display cursor in Raft/Sensor/Amplifier
-     - 2
-     - High
-     - None
-   * - 
-     - *Triggers*
-     - 
-     - 
-     - 
-   * - FAFF-REQ-001_
-     - Support of automated triggers
-     - 
-     - 
-     - 
-  
+    * - Requirement
+        - Short Description
+        - Phase
+        - Priority
+        - Prerequisite(s)
+    * - 
+        - `Triggering Mechanisms Requirements`_
+        - 
+        - 
+        - 
+    * - FAFF-REQ-001_
+        - Trigger capability for report generation
+        - 
+        - 
+        - 
+    
 
 Requirements for On-the-fly Analysis and Reporting
 ==================================================
 
+Requirements summary goes here.
+
+
 Triggering Mechanisms Requirements
 ----------------------------------
-
-.. _FAFF-REQ-001:
 
 FAFF-REQ-001
 ^^^^^^^^^^^^
@@ -62,40 +67,37 @@ FAFF-REQ-001
 
 **Applicable Use-cases:**  Automated Fault Report 
 
-**Suggested Implementation to fulfil requirement:** Create a "Catcher" CSC that holds "rules" and sends/monitors processing sent to the OCPS.
+**Suggested Implementation to fulfil requirement:** Create a "Catcher" CSC capability that holds "rules" and sends/monitors processing sent to the OCPS.
 
-
-.. _FAFF-REQ-002:
 
 FAFF-REQ-002
 ^^^^^^^^^^^^
 
-**Specification (FAFF-REQ-002):** The project shall provide a mechanism to trigger on-the-fly data analysis based on human selection.
+**Specification:** The project shall provide a mechanism to trigger on-the-fly data analysis based on human selection.
 
 **Rationale:** An analysis tool that is based on a trigger may also produce meaningful output for other use-cases. Having the ability for an operator to manually trigger the analysis+plot displays is useful for when the logic for the automated mechanism is not well captured.
 
 **Current shortcomings:** No current tooling to rapidly trigger an analysis manually. Requires the above requirement to be fulfilled.
 
-**Applicable Use-cases:** Jitter (can trigger when image motion is observed or if other indicator may be present such as manually induced vibration or imbalance)
+**Applicable Use-cases:** `Jitter <Mount Jitter Measurement and Reporting>`_ (can trigger when image motion is observed or if other indicator may be present such as manually induced vibration or imbalance)
 
 **Suggested Implementation to fulfil requirement:** Catcher-related analyses could be trigger manually from a LOVE based GUI.
 
-.. _FAFF-REQ-003:
 
 FAFF-REQ-003
 ^^^^^^^^^^^^
 
 **Specification:** The project shall provide a service to perform the on-the-fly data processing associated with events and telemetry.
 
-**Rationale:** For image related processing this is the OCPS. However, not all interesting information is image related.
+**Rationale:** For image related processing this is the OCPS. However, numerous analysis situations are not necessarily associated with images.
 
-**Current shortcomings:** In current design, can't run OCPS script without some image association, i.e., butler like (expects dataIds). This design could be modified if needed, not a fundamental technical limitation.
+**Current shortcomings:** In current design, can not run OCPS script without some image association, i.e., butler like (expects dataIds). 
+This design could be modified if needed as not a fundamental technical limitation.
 
-**Applicable Use-cases:** Jitter, Automated Fault Report 
+**Applicable Use-cases:** `Jitter <Mount Jitter Measurement and Reporting>`_, `Automated Fault Report <pgD1 Automated Fault Report Use-Case>`_
 
-**Suggested Implementation to fulfil requirement:** Augment OCPS API, also create a "Catcher CSC" that can send OCPS commands
+**Suggested Implementation to fulfil requirement:** Create a "Catcher CSC" that can send OCPS commands, also possibly augment the OCPS API.
 
-.. _FAFF-REQ-004:
 
 FAFF-REQ-004
 ^^^^^^^^^^^^
@@ -110,7 +112,6 @@ FAFF-REQ-004
 
 **Suggested Implementation to fulfil requirement:** Create a "Catcher" CSC that holds "rules" and sends/monitors processing sent to the OCPS.
 
-.. _FAFF-REQ-006:
 
 FAFF-REQ-006
 ^^^^^^^^^^^^
@@ -125,8 +126,6 @@ FAFF-REQ-006
 
 **Suggested Implementation to fulfil requirement:** Catcher publishes event which is seen by the Watcher, then alerts the user. Or a better solution might be to have the catcher be able to alert, like the watcher can but with increased functionality.
 
-
-.. _FAFF-REQ-007:
 
 FAFF-REQ-007
 ^^^^^^^^^^^^
@@ -143,12 +142,320 @@ FAFF-REQ-007
 
 
 Figure Generation Requirements
-==============================
+------------------------------
 
 Types of figures that a plotting tool needs to support `are currently found here on Confluence <https://confluence.lsstcorp.org/pages/viewpage.action?pageId=156514273>`_.
 
-
+They have not been turned into official requirements.
+However, each use-case has been analyzed by the committee and found to be possible using Bokeh.
 
 
 Requirements for Image Display Capabilities
 ===========================================
+
+This section contains requirements that are purely for the image visualization tool. 
+However, excludes interactions with other tools and/or information as it is captured in the Section on the `Interaction between Image Visualization Tool and External Information Displays`_.
+
+FAFF-REQ-011
+------------
+
+**Specification:** The display tool shall support the blinking of images. 
+Up to N (TBR) simultaneously loaded images shall be supported. 
+Both scale and colorbar matching shall be supported.
+
+**Rationale:** Flowdown from LSE-30
+
+**Priority:** 1
+
+**Current shortcomings:** Unsupported, global scale is being implemented already which is a pre-req
+
+**Applicable Use-cases:** 
+
+**Suggested implementation to fulfill requirement:**
+
+
+FAFF-REQ-012
+^^^^^^^^^^^^
+
+**Specification:** The display tool shall support the rapid alignment of images based on WCS and pixel coordinates.
+
+**Rationale:** Suggested from DMTN-126. Useful for comparing illumination patterns, effects of offsets etc.
+
+**Priority:** 2
+
+**Current shortcomings:** Unsupported, image rotation is not yet supported `FAFF-REQ-019`_ is the prerequisite
+
+**Applicable Use-cases:** 
+
+**Suggested implementation to fulfill requirement:** 
+
+
+FAFF-REQ-013
+^^^^^^^^^^^^
+
+**Specification:** The display tool shall report true pixel values in ADU.
+
+**Rationale:** Needed for rapid identification of flux levels (e.g. flats, sky flats, etc)
+
+**Priority:** ASAP
+
+**Current shortcomings:** Planned but not yet implemented
+
+**Applicable Use-cases:** Generic image inspection, flat fields etc 
+
+**Suggested Implementation to fulfill requirement:**  
+Current plan is to show the following info as the mouse is moved over the image:
+1. The Raft/CCD/Amplifier segment/ and pixel coord within the segment, as well as the absolute coordinate within the focal-plane
+2. The RA/DEC corresponding to the position. This will require the image display to get the RA/DEC from the header service. The initial implementation will not apply any corrections for optical distortions or focal-plane CCD positioning anomalies, although this might be added in future if needed
+3. The displayed (RGB) pixel value and the raw pixel value in ADU units for the selected pixel. 
+Items 1 and 2 will be calculated within the browser, so will be very fast. The raw pixel value in item 3 requires going back to the server to get the raw data at the given coordinates, so will have some lag as the mouse is moved.
+
+
+
+FAFF-REQ-015
+^^^^^^^^^^^^
+
+**Specification:** The display tool shall allow for dynamic adjustment of the image display parameters: e.g. scale and stretch.
+
+**Rationale:** The display parameters are very important and vary depending on use case.  In some cases, it's important to be able to push as far into the noise as possible to see faint objects/structures.  Other times it is more important to see bright or extended features in the images.  It is difficult for most people to guess at the appropriate values for these parameters, therefore, it's important to have a dynamic way for users to adjust the parameters without having a lot of user interface overhead.  DS9 handles this by allowing the user to adjust by holding a mouse button and dragging the mouse in two axes.  This is not a recommendation for the implementation, but an example of another implementation that has been successful at implementing this feature.
+
+**Priority:** 1
+
+**Current shortcomings:** ??
+
+**Applicable Use-cases:** High-contrast feature identification
+
+**Suggested Implementation to fulfill requirement:** There is concern that implementation could be difficult in a client/server environment. To get a snappy experience would require some new features (if it's even possible). We suggest a 2-phase approach for implementation, first with scale+stretch functionality then with the user-scrolling (etc).
+
+
+FAFF-REQ-016
+^^^^^^^^^^^^
+
+**Specification:** The display tool shall provide a mechanism to provide the information required to do a retrieval of information from a butler in another window in a rapid fashion.
+
+**Explanation:** During the 2021-11-23 meeting it was agreed that many people will want to look at information for a specific image that they'll be looking at in the display tool. This will require extracting the obsID and other information in order to do a {{butler.get}}. This requirement is to put functionality in the camera visualization tool that will essentially make that information transfer really quick (e.g. a button to copy the python syntax for the butler call directly to the clipboard) 
+
+**Rationale:**
+
+**Priority:**
+
+**Current shortcomings:** Not implemented
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement:**  Create a "button" that copies the ascii string to make the python dictionary for a dataId to the clipboard.
+
+
+FAFF-REQ-018
+^^^^^^^^^^^^
+
+**Specification:** Ability to smooth the image using different algorithms.
+
+**Rationale:** This was mentioned as a requirement in DMTN-126 (sec. 4.9). 
+
+**Priority:** 2?
+
+**Current shortcomings:** Not implemented
+
+**Applicable Use-cases:** 
+
+**Suggested Implementation to fulfill requirement:** Supply a list of supported kernels/algorithms. 
+Should imply a constraint that the filter must be able to run in X seconds.
+Examples could include boxcar smoothing.
+This is very fast to do for some filters if you do it in Fourier space, with the caveat, you have to ignore mask planes, etc.
+
+
+FAFF-REQ-019
+^^^^^^^^^^^^
+
+**Specification:** Ability to rotate image and show a compass
+
+**Rationale:** This is useful for image orientation on the sky (North up, East Right is the standard).
+
+**Priority:** 1 (but not mission critical so could be seen as a 3)
+
+**Current shortcomings:** Rotation available but not turned on. Unsure about a flip.
+
+**Applicable Use-cases:** 
+
+**Suggested Implementation to fulfill requirement:** Provide a list of rotations (0, 90, 180, -90), then a N up, then a "custom" option.
+
+
+FAFF-REQ-027
+^^^^^^^^^^^^
+
+**Specification:** Measurement between two points on images.  This includes in RA/Dec, delta-angle, or in pixels.
+
+**Rationale:** It is very hard to gauge scale on images because the objects in them are frequently self similar at multiple scales.  Converting pixels scale (even if you know it) to distance is both tricky and error prone.
+
+**Priority:** 3 (A Bokeh App would get get us most of the way there) 
+
+**Current shortcomings:** WCS Solutions are discontinuous, unsure how this would manifest across multiple sensors/rafts.
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement:** A tool in the menu bar that would allow the user to click a point and drag to another point on the image.  The distance (configured through the menu) would be displayed along with the line on the image between the two points.
+
+
+FAFF-REQ-028
+^^^^^^^^^^^^
+
+**Specification:** Display the Equatorial Coordinate grid over the image (other coordinate systems could be supported).  The grid should be (automatically) adaptive so that it shows about the right scale as the user zooms in and out.
+
+**Rationale:** As with measurement (FAFF-REQ-028) estimation of the scale of things on images is very difficult by eye.  Having a reference grid is useful in putting the distribution of sources on images in context.
+
+**Priority:** 1 (ComCam)
+
+**Current shortcomings:** Not implemented. `FAFF-REQ-019`_ is a prerequisite.
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement:** Draw a grid on top of the image to represent the coordinate system.  It will not be rectilinear.  The grid lines should be labeled so that they can be identified both by what axis of the coordinate system they are as well as which coordinate value each line represents. Would be nice to have the ability for a user to be able to adjust this.
+
+
+FAFF-REQ-029
+^^^^^^^^^^^^
+
+**Specification:** Display a trace of the pixel values along a line, at arbitrary angle, specified by the user.
+
+**Rationale:** Even with the ability to finely control the contrast and stretch of the color table, it is still frequently difficult to determine the detailed shape of profiles in an image.  An example is that it is useful to have an estimate of the seeing (e.g. FWHM) of an image.  This can be estimated from the image alone, but being able to draw a trace through the center of a bright, non-saturated star allows the user to read off the value directly from the plot.  The line needs to be made at arbitrary angle to avoid other intervening objects in the image.
+
+**Priority: 3** (nice to have, covered largely by Bokeh functionality)
+
+**Current shortcomings:** 
+
+**Applicable Use-cases:** 
+
+**Suggested Implementation to fulfill requirement:** A tool available in the menu would allow a user to choose one point on the image and drag a line to another point on the image.  A plot window would then be populated by the pixel values of all pixels touched by the line as a function of distance along the line.  The units of the pixel values should be the values in the image.
+
+
+FAFF-REQ-030
+^^^^^^^^^^^^
+
+..
+  Previously CAM-REQ-003
+
+
+**Specification:** The display tool should use a lossless image format to display pixel data
+
+**Rationale:** Pixel data may not be exact using jpg due to possible losses. Suggestion is to use png, which is a lossless format.
+
+**Priority:** 1
+
+**Current shortcomings:** Currently the image visualization backend sends jpg images to the web browser. jpeg is not a lossless format, so we would like to try sending png images instead (which are lossless). It is unclear whether this will have a significant visual impact, but it has been already investigated to be possible and appears easy to try.
+
+**Applicable Use-cases: **
+
+**Suggested Implementation to fulfill requirement:** Already built-in to cantaloupe/open-seadragon
+
+Comments/Discussion: 
+
+
+FAFF-REQ-031
+^^^^^^^^^^^^
+
+..
+  Previously CAM-REQ-004
+
+
+**Specification:** The display tool shall allow individual user logins to enable user specific preferences.
+
+**Rationale:**  To support user preferences (e.g. user would like to display images using the bb color scheme, or user wants to mark images as favorites so I can return to them later) and to support remote control of the image display tool (required by several other requirements on this page) it is required that individual users to be able to login. 
+
+**Priority: 1**
+
+**Current shortcomings:** Currently the image visualization tool is purely read-only and does not require any user login.
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement:** Initially we will allow github login, since this is easy to implement and is usable by anyone with a github account. One day we may support IPA login on the summit. This has already been implemented on other CCS web applications. Once logged in users will be able to access their jwt token, which when passed to other tools will authorize them for remote control of the display.
+
+
+FAFF-REQ-032
+^^^^^^^^^^^^
+
+..
+  Previously CAM-REQ-005
+
+
+**Specification:**  Add additional info to camera image database.
+
+**Rationale:** Currently the camera maintains a simple image database for every image taken. 
+This currently contains minimal information, including ObsId, Image Type, Test Type, Run Number, Exposure time, Dark time, Rafts read out, location of FITS files. 
+There are several things which could usefully be added to this database, including: Group ID (used for summit data taking), Installed Filter(s), RA and DEC of image (needed for other requirements on this page).  
+This information is used by the image browser, and is displayed in the header of the image visualization tool. 
+The image database is also used for tracking which images are in the 2-day store, and will be used for tracking when DM notifies the camera that the images have been archived and are eligible for removal from the 2-day store.
+
+**Priority:** 1
+
+**Current shortcomings:** Not implemented.
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement:** A simple camera image database already exists. Ideally, this would be combined/coordinated with other similar databases being developed by T&S (for LOVE) and perhaps by DM (see :ref:`Other Findings and Recommendations`_)
+
+
+FAFF-REQ-033
+^^^^^^^^^^^^
+
+..
+  Previously CAM-REQ-006
+
+
+
+**Specification:**  Image viewer shall be able to directly read data from the DAQ 2-day store.
+
+**Rationale:** The lack of this is currently the limiting factor on performance with LSSTCam. 
+
+**Priority:** 2
+
+**Current shortcomings:** Currently, the camera image visualization tool works by reading FITS files generated from the DAQ by CCS. This works fairly well for AuxTel and ComCam but is a limiting factor on performance for the full camera.
+
+**Applicable Use-cases:** 
+
+**Suggested Implementation to fulfill requirement:**  An interface has been developed which allows the data to be extracted directly from the DAQ 2-day store, without ever touching disk. 
+This works and is fast, but has not yet been put into production due to the need to study what impact if any it has on DAQ performance.
+
+FAFF-REQ-034
+^^^^^^^^^^^^
+
+..
+  Previously CAM-REQ-007
+
+
+**Specification:**  Camera shall send image thumbnails via SAL after each image
+
+**Rationale:**
+
+**Priority: 2**
+
+**Current shortcomings:** Some time ago T+S site requested that the camera deliver thumbnails of images via SAL. The appropriate events were defined at the camera XML level, but have not yet been filled in. 
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement:** The camera image visualization tool is already capable of delivering such thumbnails.
+However, the code to send them automatically after each image is currently missing.
+
+
+Interaction between Image Visualization Tool and External Information Displays
+==============================================================================
+
+This section is to capture requirements that dictate functionality regarding when the user requires additional calculations and/or information be gathered/determined that is not readily available. 
+
+FAFF-REQ-025
+------------
+
+..
+  Previously CAM-REQ-007
+
+**Specification:** The display tool shall provide callbacks that relay information from both keyboard and cursor input.
+
+**Rationale:** Required to provide input to plotting packages and external analysis tools. 
+
+**Priority:** 1
+
+**Current shortcomings:** Not implemented. 
+
+Applicable Use-cases: Offsetting of the telescope
+
+Suggested Implementation to fulfil requirement: 

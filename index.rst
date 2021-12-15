@@ -66,6 +66,7 @@ Some of the responses to the `charge`_ of the FAFF group were built off an Image
 That group was not focused on on-the-fly functionality but many of the findings were applicable and taken into account here when it made sense to do so.
 
 
+
 Responses to Charge Questions and Deliverables
 ==============================================
 
@@ -91,7 +92,7 @@ The responses from the community can be found `here <https://confluence.lsstcorp
 
 Many of the examples from the community had significant overlap of information.
 To amalgamate the information and create a basis from which to work, a series of standardized use-cases were developed which followed a common format and layout.
-The template includes 
+A standardized summary was also created to ease comparisons between use-cases.
 
 The standardized use-cases associated with this deliverable are found at :ref:`pg-D1-Use-cases` page.
 
@@ -106,7 +107,7 @@ Deliverable 2:
 
    2. A set of requirements to augment, clarify, or remove ambiguity that may occur from looking only at the use-cases.
       
-      - This is not a formal and all-encompassing LSE requirements document.
+      - This is not a formal and all-encompassing LSE-type requirements document.
 
 Like the use-cases, the requirement deliverables have been separated into two different categories, those which are focused on tooling and procedures for on-the-fly analysis and image visualization.
 The two categories are quite separate in nature yet not completely independent.
@@ -128,7 +129,7 @@ Deliverable 3:
       - Report on their status, limitations, and where their current requirements may need to be expanded to cover any increase in scope
       - Tools which were considered but found to be inadequate must also be reported
 
-Content for this section is found in the `original presentation givent to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`.
+Content for this section is found in the `original presentation given to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`_.
 
 
 **Tools**:
@@ -143,11 +144,12 @@ Content for this section is found in the `original presentation givent to stakeh
 - Chronograph 
 - EFD
 - SAL
+- Prompt Processing Data Products and Service
 
 **Planned Computing Power:**
 
 - Camera Diagnostic Cluster
-- Commissioning Cluster (ANTU)
+- Commissioning Cluster (Antu)
    
 
 .. _Deliverable 4:
@@ -172,21 +174,18 @@ Entirely New Functionality
 - Implementation of on-the-fly architecture requires Bokeh to be installed in all dev+RSP environments
 
    - Draft how to turn a notebook-based Bokeh "plot" into an app (see `Simon's draft <https://gist.github.com/SimonKrughoff/cc02f873a2a1518161d3f3a1839be4a5>`_)
-   - Draft how to embed said App into LOVE
+   - Draft how to embed said App into LOVE 
+   - Proof-of-concept of "press a button in the Camera Visualiation Tool" and get information from the callback in a Bokeh App
 
 
+- Derive a "Catcher CSC" Design. This design should include:
 
-- Derive a "Catcher CSC" Design. This design should.
-
-  - "Catcher" CSC, with LOVE GUI(s?)
+  - An outline of the "Catcher" CSC, with a description of LOVE GUI(s) to support it (`Draft is currently being worked on as a google doc <https://docs.google.com/document/d/1mbmfqjebOuHIV8CwC7jFHcFKCRMtyBDHPXeGfBO1EPE/edit#>`_)
   - Work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer
   - Appropriate repos and instructions
 
 
-Out of Scope but completely necessary is the addition of a butler interface to the camera visualization tool.
-Ideally, the Bokeh apps should also be available to people on the RSP? 
-
-
+See `Other Findings and Recommendations`_ regarding commissioning needs that are Out-Of-Scope for this committee.
 
 Augmenting Current Functionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -219,7 +218,102 @@ Deliverable 5:
 This is a prioritized list of which functionalities should be implemented in which order.
 
 
+.. _Other Findings and Recommendations:
 
+Other Findings and Recommendations
+==================================
+
+This section will have information that doesn't fall into the deliverables and/or is slightly outside of the scope.
+
+
+FAFF-REQ-014
+^^^^^^^^^^^^
+
+.. note::
+
+    FIXME - this requirement needs to be removed but captured in the "conclusion"
+
+
+**Specification:** A display tool shall support being deployed in places where historical data is available.
+
+**Rationale:** This will need to be available to people using the RSP.
+
+**Priority: 1**
+
+**Current shortcomings:** Firefly may not meet all of the requirements for all image visualization
+
+**Applicable Use-cases:** Rapid per sensor image display and inspection.
+
+**Suggested Implementation to fulfill requirement:** Firefly is already part of the base RSP deployment.  This means it is deployed, by default, everywhere there RSP is deployed.
+
+**Comments/Discussion:**
+
+PI: On-the-fly analysis is only for summit usage, so although it would be nice to have the image display capabilities elsewhere I'm not sure it's a requirement. It's certainly not planned (and probably not even feasible) for the Camera Visualization tool.
+
+TJ: Installing the camera image visualization server at the USDC (SLAC) is certainly feasible. It would need a way to be able to locate the data for a given obsid, but this is also presumably be possible. This could be useful even for summit operations if it allows display of historic images (for comparison with new images). Repurposing the IR2 servers for this purpose would be possible, although getting something running sooner would also be useful.
+
+PI: So do we want/need the capability to look at a full-screen image from 6 months ago? Does the Commissioning cluster have access to all-data ?   
+
+Group agreement that this would be hugely needed/beneficial but is outside scope, make strong recommendation to incorporate elsewhere anyways.
+
+KB: general commissioning / SV use case is to be able to examine aspects of image quality that cross detector boundaries (e.g., stray and scattered light, satellite trails, pervasive issues across detectors) for which full focal plane visualization is critical
+
+
+FAFF-REQ-017
+^^^^^^^^^^^^
+
+**Specification:** Ability to choose between minimal ISR versus some more sophisticated ISR (for example, the calexp images served from a butler)
+
+**Rationale:**
+
+**Priority:**
+
+**Current shortcomings:** Currently unable to interface to DM (butler) 
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement: **
+
+**Knowledge Level required of developer: 
+
+Comments/Discussion:
+
+PI: This is for the original reduction, yes? Or is it assumed it can be changed/updated on-the-fly and applied to the previous image?
+
+PI: concerned about dependencies between Camera/DM, although this may not be a huge deal.
+
+KB: intent would be use butler get to acquire the calexp images
+
+Zooming out, do we really require the DM/Butler interface for on-the-fly data analysis? 
+
+
+Out of Scope (but completely necessary) is the addition of a butler interface to the camera visualization tool.
+Ideally, the Bokeh apps should also be available to people on the RSP? 
+
+
+FAFF-REQ-026
+^^^^^^^^^^^^
+
+Specification (FAFF-REQ-026): The display tool should be able to display data obtained from the butler, or obtained from a users interactive Jupyter session
+
+Rationale:
+Priority: 1
+
+Current shortcomings: 
+
+Applicable Use-cases: Displaying images with full DM ISR applied
+
+Suggested Implementation to fulfill requirement: 
+
+Knowledge Level required of developer:  DM/butler expertise. Knowledge of IIIF client/server architecture.
+
+Comments/Discussion: Does DM already have an abstract image visualization interface? Yes – the afw interface exists. Needs to be evaluated to see if this could be used to meet all the requirements.
+
+
+FAFF-REQ-XXX
+^^^^^^^^^^^^
+Image visualization data source
+Currently the camera image visualization system works by fetching raw image data, either from FITS files on the diagnostic cluster or directly from the DAQ 2-day store. This only allows it to display "raw images" or images with simple corrections applied to raw image data. A possible extension, suggested by several of the requirements here is that the data also be able to come from other sources.
 
 
 TO DO BEFORE FINAL REPORT SUBMISSION
@@ -232,6 +326,7 @@ TO DO BEFORE FINAL REPORT SUBMISSION
 - Move confluence content into this technote where appropriate. 
   Prints of PDFs may be sufficient.
 
+- Where
 .. .. rubric:: References
 
 .. Make in-text citations with: :cite:`bibkey`.
