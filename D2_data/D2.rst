@@ -192,7 +192,7 @@ FAFF-REQ-012
 
 **Specification:** The display tool shall support the rapid alignment of images based on WCS and pixel coordinates.
 
-**Rationale:** Suggested from :ref:`DMTN-126`. Useful for comparing illumination patterns, effects of offsets etc.
+**Rationale:** Suggested from :dmtn:`126`. Useful for comparing illumination patterns, effects of offsets etc.
 
 **Priority:** 2
 
@@ -264,7 +264,7 @@ FAFF-REQ-018
 
 **Specification:** Ability to smooth the image using different algorithms.
 
-**Rationale:** This was mentioned as a requirement in DMTN-126 (sec. 4.9). 
+**Rationale:** This was mentioned as a requirement in ::dmtn:`126`` (sec. 4.9). 
 
 **Priority:** 2?
 
@@ -355,11 +355,11 @@ FAFF-REQ-030
 
 **Priority:** 1
 
-**Current shortcomings:** Currently the image visualization backend sends jpg images to the web browser. jpeg is not a lossless format, so we would like to try sending png images instead (which are lossless). It is unclear whether this will have a significant visual impact, but it has been already investigated to be possible and appears easy to try.
+**Current shortcomings:** Currently the image visualization backend sends jpg images to the web browser. jpeg is not a lossless format, so we would like to try sending png images instead (which are lossless). 
 
 **Applicable Use-cases: **
 
-**Suggested Implementation to fulfill requirement:** Already built-in to cantaloupe/open-seadragon
+**Suggested Implementation to fulfill requirement:** Already built-in to cantaloupe/open-seadragon. It is unclear whether this will have a significant visual impact, but it has been already investigated to be possible and appears easy to try.
 
 Comments/Discussion: 
 
@@ -448,6 +448,22 @@ FAFF-REQ-034
 
 **Suggested Implementation to fulfill requirement:** The camera image visualization tool is already capable of delivering such thumbnails.
 However, the code to send them automatically after each image is currently missing.
+
+
+FAFF-REQ-035
+^^^^^^^^^^^^
+
+**Specification:**  Camera shall support a mode that only displays the wavefront sensing sensors.
+
+**Rationale:** This is for commissioning purposes
+
+**Priority: 2**
+
+**Current shortcomings:** Some time ago T+S site requested that the camera deliver thumbnails of images via SAL. The appropriate events were defined at the camera XML level, but have not yet been filled in. 
+
+**Applicable Use-cases:** Active Optics
+
+**Suggested Implementation to fulfill requirement:** 
 
 
 Interaction between Image Visualization Tool and External Information Displays
