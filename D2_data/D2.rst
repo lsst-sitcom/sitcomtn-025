@@ -63,6 +63,8 @@ FAFF-REQ-001
 
 **Rationale**: Telescope performance analysis will occur based on non-image based events (e.g. wind shake, or vibration sensor triggers). 
 
+**Priority:** ASAP
+
 **Current shortcomings:** The only current tooling to monitor events is the Watcher. It exists to raise alarms but not to trigger processing of data that would then be displayed, or possibly trigger an alarm.
 
 **Applicable Use-cases:**  Automated Fault Report 
@@ -76,6 +78,8 @@ FAFF-REQ-002
 **Specification:** The project shall provide a mechanism to trigger on-the-fly data analysis based on human selection.
 
 **Rationale:** An analysis tool that is based on a trigger may also produce meaningful output for other use-cases. Having the ability for an operator to manually trigger the analysis+plot displays is useful for when the logic for the automated mechanism is not well captured.
+
+**Priority:** ASAP
 
 **Current shortcomings:** No current tooling to rapidly trigger an analysis manually. Requires the above requirement to be fulfilled.
 
@@ -91,12 +95,15 @@ FAFF-REQ-003
 
 **Rationale:** For image related processing this is the OCPS. However, numerous analysis situations are not necessarily associated with images.
 
+**Priority:** ASAP
+
 **Current shortcomings:** In current design, can not run OCPS script without some image association, i.e., butler like (expects dataIds). 
 This design could be modified if needed as not a fundamental technical limitation.
 
 **Applicable Use-cases:** `Jitter <Mount Jitter Measurement and Reporting>`_, `Automated Fault Report <pgD1 Automated Fault Report Use-Case>`_
 
-**Suggested Implementation to fulfil requirement:** Create a "Catcher CSC" that can send OCPS commands, also possibly augment the OCPS API.
+**Suggested Implementation to fulfil requirement:** Create a "Catcher" CSC that evaluates user-defined conditions and launches analysis "scripts" when the condition is met.
+This includes the ability that the script can command the OCPS.
 
 
 FAFF-REQ-004
@@ -106,11 +113,13 @@ FAFF-REQ-004
 
 **Rationale:** If the data-processing yields and interesting result, a "service" needs to monitor this and be able to act accordingly.
 
+**Priority:** 1
+
 **Current shortcomings:** This may be possible using the Watcher, but requires a more detailed look as it was not an original use-case.
 
 **Applicable Use-cases:** All
 
-**Suggested Implementation to fulfil requirement:** Create a "Catcher" CSC that holds "rules" and sends/monitors processing sent to the OCPS.
+**Suggested Implementation to fulfil requirement:** The Catcher CSC can do monitoring, but a LOVE GUI will be required to display the status.
 
 
 FAFF-REQ-006
@@ -120,9 +129,11 @@ FAFF-REQ-006
 
 **Rationale:** If the data-processing yields and interesting result, a "service" needs to monitor this and be able to act accordingly. Ideally, the alert should provide a link or single-click mechanism to see that result.
 
+**Priority:** 1
+
 **Current shortcomings:** This may be possible using the Watcher, but requires a more detailed look as it was not an original use-case.
 
-**Applicable Use-cases:** Jitter
+**Applicable Use-cases:** `Jitter <Mount Jitter Measurement and Reporting>`_
 
 **Suggested Implementation to fulfil requirement:** Catcher publishes event which is seen by the Watcher, then alerts the user. Or a better solution might be to have the catcher be able to alert, like the watcher can but with increased functionality.
 
@@ -134,9 +145,11 @@ FAFF-REQ-007
 
 **Rationale:** The watcher in it's current implementation only allows a user to acknowledge it and then the task/alert is complete. This is not sufficient for the "Catcher" as it needs to display results/links as well. Furthermore, that result should persist such that if a new result comes in the previous one is not over-written. 
 
+**Priority:** 1
+
 **Current shortcomings:** N/A
 
-**Applicable Use-cases:** Jitter
+**Applicable Use-cases:** `Jitter <Mount Jitter Measurement and Reporting>`_
 
 **Suggested Implementation to fulfil requirement:** Catcher GUI exists and reports the recent results of tasks.
 
@@ -167,7 +180,7 @@ Both scale and colorbar matching shall be supported.
 
 **Priority:** 1
 
-**Current shortcomings:** Unsupported, global scale is being implemented already which is a pre-req
+**Current shortcomings:** Unsupported, global scale is being implemented already (FAFF-REQ-015_)
 
 **Applicable Use-cases:** 
 
@@ -179,7 +192,7 @@ FAFF-REQ-012
 
 **Specification:** The display tool shall support the rapid alignment of images based on WCS and pixel coordinates.
 
-**Rationale:** Suggested from DMTN-126. Useful for comparing illumination patterns, effects of offsets etc.
+**Rationale:** Suggested from :ref:`DMTN-126`. Useful for comparing illumination patterns, effects of offsets etc.
 
 **Priority:** 2
 
@@ -221,7 +234,7 @@ FAFF-REQ-015
 
 **Priority:** 1
 
-**Current shortcomings:** ??
+**Current shortcomings:** First cut at scaling options now implemented, but not deployed.
 
 **Applicable Use-cases:** High-contrast feature identification
 
