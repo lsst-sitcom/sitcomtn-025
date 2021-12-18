@@ -136,7 +136,7 @@ Content for this section is found in the `original presentation given to stakeho
 
 - Camera Visualization Tool
 - Watcher
-- faro
+- faro (after burner to the OCPS and prompt processing)
 - SAL Scripts
 - OCPS 
 - Nublado Interface (USDF, Summit etc) with Jupyter Notebook Functionality
@@ -152,6 +152,7 @@ The following computing resources are available for use but the usage of each is
 - Camera Diagnostic Cluster
 - Commissioning Cluster (Antu)
    
+Add discussion with regards to how these tools are used for on-sky data and calibration data? Could also put this in the `Other Findings and Recommendations`_  section.
 
 .. _Deliverable 4:
 
@@ -174,20 +175,7 @@ Entirely New Functionality
 
 See `Other Findings and Recommendations`_ regarding commissioning needs that are Out-Of-Scope for this committee.
 
-Bokeh Plotting Applications
-''''''''''''''''''''''''''''
 
-- Implementation of on-the-fly architecture requires Bokeh to be installed in all dev+RSP environments
-
-   - Draft how to turn a notebook-based Bokeh "plot" into an app (see `Simon's draft <https://gist.github.com/SimonKrughoff/cc02f873a2a1518161d3f3a1839be4a5>`_)
-   - Draft how to embed said App into LOVE 
-   - Proof-of-concept of "press a button in the Camera Visualiation Tool" and get information from the callback in a Bokeh App
-
-Papermill executed notebooks
-'''''''''''''''''''''''''''''
-
-- Suggested implementation for creating on-the-fly reports and re-runable notebooks that will store the parameters
-- These will be published to the LFA
 
 A "Catcher CSC"
 '''''''''''''''''
@@ -216,7 +204,20 @@ The apps can then create dynamic (or static) plots, display images, or even be s
 One caveat is that they can only be used where they are deployed.
 Should they wish to be used at the RSP for instance, they will need to be deployed there as well (and obviously any SAL commands will not work).
 
+Bokeh Plotting Applications
+''''''''''''''''''''''''''''
 
+- Implementation of on-the-fly architecture requires Bokeh to be installed in all dev+RSP environments
+
+   - Draft how to turn a notebook-based Bokeh "plot" into an app (see `Simon's draft <https://gist.github.com/SimonKrughoff/cc02f873a2a1518161d3f3a1839be4a5>`_)
+   - Draft how to embed said App into LOVE 
+   - Proof-of-concept of "press a button in the Camera Visualiation Tool" and get information from the callback in a Bokeh App
+
+Papermill executed notebooks
+'''''''''''''''''''''''''''''
+
+- Suggested implementation for creating on-the-fly reports and re-runable notebooks that will store the parameters
+- These will be published to the LFA
 
 - TO DO
   - Work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer
@@ -229,8 +230,12 @@ Augmenting Current Functionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Camera Visualization tools (as per described in the requirement section above)
-- OCPS needs access to EFD
+- OCPS (really the butler) needs access to EFD (no explicit use-case at the moment) but one can invision how having a pipeTask be capable to correlate IQ against items in the EFD could be useful.
 
+   - No code has been written to integrate butler directly with EFD, but it is possible to do
+   - Could define pipelines that explicitly specified EFD datasets as pipeline inputs. 
+     For now you would have to sort out the mapping of Exposure dataId to and EFD call in, I guess, a special runQuantum method in the pipeline task
+  
 
 See `Other Findings and Recommendations`_ regarding commissioning needs that are Out-Of-Scope for this committee.
 
@@ -267,39 +272,66 @@ This section will have information that doesn't fall into the deliverables and/o
 
 .. note::
 
-   This is a bit of a dumping ground at the moment and has no organization.
+   This is still a bit of a dumping ground at the moment.
+
+Diagnostic And Commissioning Cluster Usage Needs Definition
+-----------------------------------------------------------
+
+This working group was not able to find any documented strategy on how the commissioning and diagnostic clusters are to be used during commissioning and the survey.
+High-level descriptions exist from early in the project, however they are not sufficient to build out the system and do not take into account much of the as-built software and hardware capabilities.
+Although beyond the scope of this working group, it is strongly suggested that a strategy be developed that identifies and documents the use-cases, specifically in regards to the differences between how calibration and on-sky data is handled.
+Currently, the camera diagnostic cluster hardware is on the summit but not being used, largely in part due to a lack of definition of it's use-cases and how it is to interact within the global data analysis workflow of the Rubin Observatory, including whether or not DM tooling must be supported.
+
+This committee strongly recommends a follow-up committee be formed to address questions such as these which must be answered in the near term in order to properly prepare for commissioning.
+
+
+Camera Visualization Tool Functionality Limitations for General Commissioning
+-----------------------------------------------------------------------------
+
+The Camera Visualization Tool, once augmented with the new specifications, will be sufficient for on-the-fly applications but will not be able to satisfy many of the more general commissioning use-cases. 
+This committee was formed to look only at on-the-fly analyses, and the following specifications are out of scope, however, in order for the general commissioning effort to be successful the following functionalities will need to be implemented, or covered by a different suite of tooling.
+Note that this is *not* a complete set of specifications for general commissioning but is merely a subset that we filtered out as being not specifically required for on-the-fly analysis.
+If the capabilites were in place, then the on-the-fly users will certainly take advantage of them.
 
 FAFF-REQ-014
 ^^^^^^^^^^^^
 
-.. note::
+**Specification:** The camera visualization tool shall support being deployed in places where historical data is available.
 
-    FIXME - this requirement needs to be removed but captured in the "conclusion"
-
-
-**Specification:** A display tool shall support being deployed in places where historical data is available.
-
-**Rationale:** This will need to be available to people using the RSP.
+**Rationale:** This will need to be available to people using the RSP and commissioning cluster.
+The general commissioning / SV use case is to be able to examine aspects of image quality that cross detector boundaries (e.g., stray and scattered light, satellite trails, pervasive issues across detectors) for which full focal plane visualization is critical. 
+Of course, these studies will involve looking at images that date back in time, and therefore will need to be executed from the RSP (or other processing center).
+This could be useful even for summit operations if it allows display of historic images (for comparison with new images).
+The historical data on the summit is currently limited to 30 days.
 
 **Priority: 1**
 
-**Current shortcomings:** Firefly may not meet all of the requirements for all image visualization
+**Current shortcomings:** Firefly may not meet all of the requirements for all image visualization, specifically in regards to full-frame visualization.
+Deployment not nested into current RSP deployment strategy.
+It requires a mechanism to locate the data for a given obsid, but this is also presumably be possible. 
 
 **Applicable Use-cases:** Rapid per sensor image display and inspection.
 
-**Suggested Implementation to fulfill requirement:** Firefly is already part of the base RSP deployment.  This means it is deployed, by default, everywhere there RSP is deployed.
+**Suggested Implementation to fulfill requirement:** 
+Deploy the camera visualization tool and Bokeh apps as part of the standard RSP packaging.
+Installing the camera image visualization server at the USDC (SLAC) is certainly feasible. 
 
-**Comments/Discussion:**
 
-PI: On-the-fly analysis is only for summit usage, so although it would be nice to have the image display capabilities elsewhere I'm not sure it's a requirement. It's certainly not planned (and probably not even feasible) for the Camera Visualization tool.
+FAFF-REQ-026
+^^^^^^^^^^^^
 
-TJ: Installing the camera image visualization server at the USDC (SLAC) is certainly feasible. It would need a way to be able to locate the data for a given obsid, but this is also presumably be possible. This could be useful even for summit operations if it allows display of historic images (for comparison with new images). Repurposing the IR2 servers for this purpose would be possible, although getting something running sooner would also be useful.
+**Specification:** The display tool should be able to display data obtained from the butler, or obtained from a users interactive Jupyter session
 
-PI: So do we want/need the capability to look at a full-screen image from 6 months ago? Does the Commissioning cluster have access to all-data ?   
+**Rationale:** Displaying images with full DM ISR applied, co-added images etc.
 
-Group agreement that this would be hugely needed/beneficial but is outside scope, make strong recommendation to incorporate elsewhere anyways.
+**Priority:** 1
 
-KB: general commissioning / SV use case is to be able to examine aspects of image quality that cross detector boundaries (e.g., stray and scattered light, satellite trails, pervasive issues across detectors) for which full focal plane visualization is critical
+**Current shortcomings:** DM has an abstract image visualization interface (afw). 
+Needs to be evaluated to see if this could be used to meet all the requirements.
+
+**Applicable Use-cases:** 
+
+**Suggested Implementation to fulfill requirement:** 
 
 
 FAFF-REQ-017
@@ -307,7 +339,7 @@ FAFF-REQ-017
 
 **Specification:** Ability to choose between minimal ISR versus some more sophisticated ISR (for example, the calexp images served from a butler)
 
-**Rationale:**
+**Rationale:** 
 
 **Priority:**
 
@@ -315,48 +347,7 @@ FAFF-REQ-017
 
 **Applicable Use-cases:**
 
-**Suggested Implementation to fulfill requirement: **
-
-**Knowledge Level required of developer: 
-
-Comments/Discussion:
-
-PI: This is for the original reduction, yes? Or is it assumed it can be changed/updated on-the-fly and applied to the previous image?
-
-PI: concerned about dependencies between Camera/DM, although this may not be a huge deal.
-
-KB: intent would be use butler get to acquire the calexp images
-
-Zooming out, do we really require the DM/Butler interface for on-the-fly data analysis? 
-
-
-Out of Scope (but completely necessary) is the addition of a butler interface to the camera visualization tool.
-Ideally, the Bokeh apps should also be available to people on the RSP? 
-
-
-FAFF-REQ-026
-^^^^^^^^^^^^
-
-Specification (FAFF-REQ-026): The display tool should be able to display data obtained from the butler, or obtained from a users interactive Jupyter session
-
-Rationale:
-Priority: 1
-
-Current shortcomings: 
-
-Applicable Use-cases: Displaying images with full DM ISR applied
-
-Suggested Implementation to fulfill requirement: 
-
-Knowledge Level required of developer:  DM/butler expertise. Knowledge of IIIF client/server architecture.
-
-Comments/Discussion: Does DM already have an abstract image visualization interface? Yes – the afw interface exists. Needs to be evaluated to see if this could be used to meet all the requirements.
-
-
-FAFF-REQ-XXX
-^^^^^^^^^^^^
-Image visualization data source
-Currently the camera image visualization system works by fetching raw image data, either from FITS files on the diagnostic cluster or directly from the DAQ 2-day store. This only allows it to display "raw images" or images with simple corrections applied to raw image data. A possible extension, suggested by several of the requirements here is that the data also be able to come from other sources.
+**Suggested Implementation to fulfill requirement:**
 
 
 TO DO BEFORE FINAL REPORT SUBMISSION
@@ -369,7 +360,6 @@ TO DO BEFORE FINAL REPORT SUBMISSION
 - Move confluence content into this technote where appropriate. 
   Prints of PDFs may be sufficient.
 
-- Where
 .. .. rubric:: References
 
 .. Make in-text citations with: :cite:`bibkey`.

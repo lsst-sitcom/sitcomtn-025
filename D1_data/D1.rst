@@ -21,6 +21,8 @@ Increased detail is given where a unique requirement is going to result from the
 General capabilities and existing functionality is given significantly less attention.
 
 
+.. _pgD1 Mount Jitter Measurement and Reporting:
+
 Mount Jitter Measurement and Reporting
 --------------------------------------
 
@@ -33,6 +35,8 @@ Afternoon Calibration Generation
 --------------------------------
 
 For the moment, the `Afternoon Calibration Generation use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Use+Cases+for+Calibration+Generation>`_.
+
+.. _pgD1 Automated Fault Report Use-Case:
 
 Automated Fault Report Use-Case
 --------------------------------

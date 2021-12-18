@@ -414,8 +414,6 @@ FAFF-REQ-033
 ..
   Previously CAM-REQ-006
 
-
-
 **Specification:**  Image viewer shall be able to directly read data from the DAQ 2-day store.
 
 **Rationale:** The lack of this is currently the limiting factor on performance with LSSTCam. 
@@ -434,7 +432,6 @@ FAFF-REQ-034
 
 ..
   Previously CAM-REQ-007
-
 
 **Specification:**  Camera shall send image thumbnails via SAL after each image
 
@@ -459,7 +456,8 @@ FAFF-REQ-035
 
 **Priority: 2**
 
-**Current shortcomings:** Some time ago T+S site requested that the camera deliver thumbnails of images via SAL. The appropriate events were defined at the camera XML level, but have not yet been filled in. 
+**Current shortcomings:** Some time ago T&S site requested that the camera deliver thumbnails of images via SAL. 
+The appropriate events were defined at the camera XML level, but have not yet been filled in. 
 
 **Applicable Use-cases:** Active Optics
 
