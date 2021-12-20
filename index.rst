@@ -168,20 +168,47 @@ Deliverable 4:
       - This could be by augmenting current systems or the creation of a new system if required
       - Deliver a proposed implementation for each use-case
 
+The use-cases contain a heading regarding a suggested implementation.
+Those sections refer to new and/or augmented functionality that is seen accross many of them.
+Because the explicit identification of new functionality would add unnecessary noise and confusion for the reader, the content has been also captured and better explained in this section.
 
+The items for this deliverable have been separated into two areas:
+#. A description of areas where `Entirely New Functionality`_ is required.
+#. A description where the requirements can be met by `Augmenting Current Functionality`_.
+
+One should also note that there were functionalities that that group found to be critical to the success of commissioning, but not directly for on-the-fly applications, which therefore resulted in the requirement being out-of-scope. 
+These types of issues are a grouped into the `Other Findings and Recommendations`_ and should be strongly considered for implementation as part of the change requests that will result from this charge.
+
+
+Augmenting Current Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When considering how to implement the use-cases, effort was always made to ensure that currently available tools would be used wherever appropriate.
+In most cases, specifically in regards to image display, augmenting functionality of existing tools is a perferred path to starting from scratch.
+
+The list of new functionalities for already existing tools include:
+
+#. Numerous `Camera Visualization Improvements <pg-D2-Requirements_for_image_display>`_ were described as part of `Deliverable 2`_ and are therefore not repeated here.
+#. The OCPS (really the butler) requires access to EFD. This is not currently captured in a use-case but one can envision how having a pipeTask be capable to correlate image quality against items in the EFD could be useful.
+
+   - No code has been written to integrate butler directly with EFD, but it is possible to do
+   - Would enable useres to define pipelines that explicitly specified EFD datasets as pipeline inputs. 
+     Currently, it would be required to sort out the mapping of Exposure dataId to and EFD call in (potentially) a special runQuantum method in the pipeline task
+  
 
 Entirely New Functionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-See `Other Findings and Recommendations`_ regarding commissioning needs that are Out-Of-Scope for this committee.
+This section identifies functionalities that are required and could not be assertained by upgrading already existing components.
+The largest piece of missing functionalty is the framework to perform on-the-fly analyses which are triggered on specific events or conditions, then able to perform calculations, generate a report (including plots etc), and have the operator be alerted.
+Implementing this type of capability requires numerous pieces to work together.
 
+This working group created a proof-of-concept of the critcal concepts and found them to be successful in satisfying the requirements and being relatively straightforward to implement.
 
 
 A "Catcher CSC"
 '''''''''''''''''
 
-At the moment, there is no CSC that supports evaluation of logical condition, that then can launch, monitor, and manage the analysis tasks that are to happen when the condition is satisfied.
-Upon completion of the report, an alert can then be sent to the operator if appropriate.
 This new "Catcher" CSC is meant to handle this functionality.
 It is still being evaluated if it is requierd to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
 It also requires a LOVE display to show which tasks are running and which reports have been generated.
@@ -207,7 +234,7 @@ Should they wish to be used at the RSP for instance, they will need to be deploy
 Bokeh Plotting Applications
 ''''''''''''''''''''''''''''
 
-- Implementation of on-the-fly architecture requires Bokeh to be installed in all dev+RSP environments
+- Implementation of on-the-fly architecture requires Bokeh to be installed in all development and analysis environments (e.g. the RSP).
 
    - Draft how to turn a notebook-based Bokeh "plot" into an app (see `Simon's draft <https://gist.github.com/SimonKrughoff/cc02f873a2a1518161d3f3a1839be4a5>`_)
    - Draft how to embed said App into LOVE 
@@ -216,7 +243,8 @@ Bokeh Plotting Applications
 Papermill executed notebooks
 '''''''''''''''''''''''''''''
 
-- Suggested implementation for creating on-the-fly reports and re-runable notebooks that will store the parameters
+
+- Suggested implementation for creating on-the-fly reports and re-runable notebooks that will store the parameters used for the execution and generation of plots etc.
 - These will be published to the LFA
 
 - TO DO
@@ -225,19 +253,6 @@ Papermill executed notebooks
 
 
 
-
-Augmenting Current Functionality
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-- Camera Visualization tools (as per described in the requirement section above)
-- OCPS (really the butler) needs access to EFD (no explicit use-case at the moment) but one can invision how having a pipeTask be capable to correlate IQ against items in the EFD could be useful.
-
-   - No code has been written to integrate butler directly with EFD, but it is possible to do
-   - Could define pipelines that explicitly specified EFD datasets as pipeline inputs. 
-     For now you would have to sort out the mapping of Exposure dataId to and EFD call in, I guess, a special runQuantum method in the pipeline task
-  
-
-See `Other Findings and Recommendations`_ regarding commissioning needs that are Out-Of-Scope for this committee.
 
 .. 
    .. important::
@@ -260,19 +275,19 @@ Deliverable 5:
        - These dates shall correspond to integration milestones.
 
 
-This is a prioritized list of which functionalities should be implemented in which order.
+This will be a prioritized list of which functionalities should be implemented in which order.
 
 
 .. _Other Findings and Recommendations:
 
-Other Findings and Recommendations
-==================================
+Other Findings and Identified Issues
+====================================
 
-This section will have information that doesn't fall into the deliverables and/or is slightly outside of the scope.
+During the existance of this working group, numerous items were identified as problematic and needing to be addressed but either were not well fit to a charge question or fell out of the scope of the charge.
+This section contains information regarding numerous issues which were identified and require attention.
 
-.. note::
+The recommendation of this committee is that a follow-up committee be created to address these items as they are required to successfully commission the observatory.
 
-   This is still a bit of a dumping ground at the moment.
 
 Diagnostic And Commissioning Cluster Usage Needs Definition
 -----------------------------------------------------------
@@ -323,6 +338,8 @@ FAFF-REQ-026
 **Specification:** The display tool should be able to display data obtained from the butler, or obtained from a users interactive Jupyter session
 
 **Rationale:** Displaying images with full DM ISR applied, co-added images etc.
+This is required to perform much of the post on-the-fly analysis during commissioning.
+
 
 **Priority:** 1
 
@@ -332,6 +349,21 @@ Needs to be evaluated to see if this could be used to meet all the requirements.
 **Applicable Use-cases:** 
 
 **Suggested Implementation to fulfill requirement:** 
+
+FAFF-REQ-036
+^^^^^^^^^^^^
+
+**Specification:** Ability to overlay markings at user-provided pixel positions
+
+**Rationale:** Used to indicate which sources are used in PSF analysis, blends, from catalogs etc.
+
+**Priority:** 1
+
+**Current shortcomings:** Currently unable to interface to DM (essentially the butler, pre-req is FAFF-REQ-026_) 
+
+**Applicable Use-cases:**
+
+**Suggested Implementation to fulfill requirement:**
 
 
 FAFF-REQ-017
@@ -348,6 +380,36 @@ FAFF-REQ-017
 **Applicable Use-cases:**
 
 **Suggested Implementation to fulfill requirement:**
+
+
+Proof-of-concept Demonstrations
+===============================
+
+To confirm the recommendations of this committee, several examples were created to provide a proof-of-concept and help identify details regarding implementation.
+The examples in the following subsections were proven using data from the summit from previous AuxTel runs.
+However, due to the recent power losses at the summit, there has been no new data in the last 30-days and therefore they are not presently able to show data.
+This will be remedied once data starts flowing again and further screenshots and evidence of their functionality will be provided.
+
+Creation and display of the jitter plots in Bokeh
+-------------------------------------------------
+
+- Link to jitter app
+- Also link to code where it is hosted
+- Add paragraph about deployment of the App.
+
+
+Creation of offset measurements in Bokeh
+----------------------------------------
+
+- Also include that it's possible to put in telescope commands in the GUI
+- Also include that it's possible to put in telescope commands in the GUI
+
+
+Offsetting example using Camera Visualiation Tool Callback
+----------------------------------------------------------
+
+This is currently an action item of a example of what can be done when requirement `FAFF-REQ-025`_ is implemented and will be populated once completed.
+
 
 
 TO DO BEFORE FINAL REPORT SUBMISSION

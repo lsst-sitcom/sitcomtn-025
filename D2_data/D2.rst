@@ -163,6 +163,8 @@ They have not been turned into official requirements.
 However, each use-case has been analyzed by the committee and found to be possible using Bokeh.
 
 
+.. _pg-D2-Requirements_for_image_display:
+
 Requirements for Image Display Capabilities
 ===========================================
 
@@ -217,12 +219,13 @@ FAFF-REQ-013
 **Applicable Use-cases:** Generic image inspection, flat fields etc 
 
 **Suggested Implementation to fulfill requirement:**  
-Current plan is to show the following info as the mouse is moved over the image:
-1. The Raft/CCD/Amplifier segment/ and pixel coord within the segment, as well as the absolute coordinate within the focal-plane
-2. The RA/DEC corresponding to the position. This will require the image display to get the RA/DEC from the header service. The initial implementation will not apply any corrections for optical distortions or focal-plane CCD positioning anomalies, although this might be added in future if needed
-3. The displayed (RGB) pixel value and the raw pixel value in ADU units for the selected pixel. 
+When he mouse is moved over the image:
+1. Display the Raft/CCD/Amplifier segment/ and pixel coord within the segment, as well as the absolute coordinate within the focal-plane
+2. Display the RA/DEC corresponding to the position. 
+   This will require the image display to get the RA/DEC from the header service. 
+   The initial implementation will not apply any corrections for optical distortions or focal-plane CCD positioning anomalies, although this might be added in future if needed
+3. Display the (RGB) pixel value and the raw pixel value in ADU units for the selected pixel. 
 Items 1 and 2 will be calculated within the browser, so will be very fast. The raw pixel value in item 3 requires going back to the server to get the raw data at the given coordinates, so will have some lag as the mouse is moved.
-
 
 
 FAFF-REQ-015
