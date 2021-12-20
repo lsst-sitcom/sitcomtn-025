@@ -57,14 +57,17 @@ Observer Data Summary Feedback
 
 Significant input was provided regarding the display of feedback to the observer, many of which were from the Scheduler.
 This was intentionally left for a later date and any specific architectural requirements that came out of this have been incorporated into the other use-cases.
-
-
+It appears that by implementing the on-the-fly analysis recommendations and using these results as part of a Bokeh app then all of the items in these use-cases can be implemented.
 
 
 Use-cases for Image Display Capabilities
 ========================================
 
-Use-case 3
-----------
+A formalized use-case was not developed in the same way as the others for Image Display Capability.
+However, repeatedly used examples for discussion and requirement generation are as follows:
 
-This is a response to Question 1, and a reference to :ref:`pgD1 Use case1`.
+#. Displays used to stretch/scale to find a target, then calculating and applying an offset.
+   This includes rotating the image to have north up, applying coordinate overlays, measuring distances etc.
+#. The viewing of calibration frames to look at flats etc.
+#. The viewing of on-sky images and adjusting as required to view low-surface brightness objects.
+   This includes applying neccesary filters, stretches etc.

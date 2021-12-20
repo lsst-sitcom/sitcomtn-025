@@ -132,7 +132,7 @@ Deliverable 3:
 Content for this section is found in the `original presentation given to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`_.
 
 
-**Tools**:
+**Tools FIXME: Add a few sentences and links to each item**:
 
 - Camera Visualization Tool
 - Watcher
@@ -152,7 +152,7 @@ The following computing resources are available for use but the usage of each is
 - Camera Diagnostic Cluster
 - Commissioning Cluster (Antu)
    
-Add discussion with regards to how these tools are used for on-sky data and calibration data? Could also put this in the `Other Findings and Recommendations`_  section.
+Add discussion with regards to how these tools are used for on-sky data and calibration data? Could also put this in the `Other Findings and Identified Issues`_  section.
 
 .. _Deliverable 4:
 
@@ -168,27 +168,32 @@ Deliverable 4:
       - This could be by augmenting current systems or the creation of a new system if required
       - Deliver a proposed implementation for each use-case
 
-The use-cases contain a heading regarding a suggested implementation.
-Those sections refer to new and/or augmented functionality that is seen accross many of them.
-Because the explicit identification of new functionality would add unnecessary noise and confusion for the reader, the content has been also captured and better explained in this section.
+Each of the use-cases presented in `Deliverable 1`_ contain a heading regarding a suggested implementation.
+Thoe contents of each section refer to new and/or augmented functionality that is seen accross many of them.
+Because the explicit identification of new functionality would add unnecessary noise and confusion for the reader, the content is accumulated here and explained in greater detail.
 
 The items for this deliverable have been separated into two areas:
+
 #. A description of areas where `Entirely New Functionality`_ is required.
 #. A description where the requirements can be met by `Augmenting Current Functionality`_.
 
+This working group also created a proof-of-concept of the critcal implementation recommendations and found them to be successful in satisfying the requirements and being relatively straightforward to implement.
+Details are found in the `Proof-of-concept Demonstrations`_ section.
+
 One should also note that there were functionalities that that group found to be critical to the success of commissioning, but not directly for on-the-fly applications, which therefore resulted in the requirement being out-of-scope. 
-These types of issues are a grouped into the `Other Findings and Recommendations`_ and should be strongly considered for implementation as part of the change requests that will result from this charge.
+These types of issues are a grouped into the `Other Findings and Identified Issues`_ and should be strongly considered for implementation as part of the change requests that will result from this charge.
 
 
 Augmenting Current Functionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When considering how to implement the use-cases, effort was always made to ensure that currently available tools would be used wherever appropriate.
+When considering how to implement the use-cases, effort was always made to ensure that currently available tools (presented in `Deliverable 3`_) would be used wherever appropriate.
 In most cases, specifically in regards to image display, augmenting functionality of existing tools is a perferred path to starting from scratch.
 
-The list of new functionalities for already existing tools include:
+The list of new functionalities required for already existing tools include:
 
 #. Numerous `Camera Visualization Improvements <pg-D2-Requirements_for_image_display>`_ were described as part of `Deliverable 2`_ and are therefore not repeated here.
+   An `example of the callback functionality <demo_callback>`_ in the `Proof-of-concept Demonstrations`_ section.
 #. The OCPS (really the butler) requires access to EFD. This is not currently captured in a use-case but one can envision how having a pipeTask be capable to correlate image quality against items in the EFD could be useful.
 
    - No code has been written to integrate butler directly with EFD, but it is possible to do
@@ -203,27 +208,30 @@ This section identifies functionalities that are required and could not be asser
 The largest piece of missing functionalty is the framework to perform on-the-fly analyses which are triggered on specific events or conditions, then able to perform calculations, generate a report (including plots etc), and have the operator be alerted.
 Implementing this type of capability requires numerous pieces to work together.
 
-This working group created a proof-of-concept of the critcal concepts and found them to be successful in satisfying the requirements and being relatively straightforward to implement.
-
 
 A "Catcher CSC"
 '''''''''''''''''
 
-This new "Catcher" CSC is meant to handle this functionality.
-It is still being evaluated if it is requierd to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
-It also requires a LOVE display to show which tasks are running and which reports have been generated.
+A series of new functionality, which for the purposes of this document we have grouped into a single "Catcher CSC," is required to handle the low-level coordiation of identifying when a specific condition is met, then launching and monitoring an analysis process.
+It is still being evaluated if it is required to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
+The Catcher functionality also requires a LOVE display to show which tasks are running, links to generated reports, and alarms or notifications for observers.
 
 More details on the design and implementation can be found in the `Catcher Design Document <https://docs.google.com/document/d/1mbmfqjebOuHIV8CwC7jFHcFKCRMtyBDHPXeGfBO1EPE/edit#>`_) currently being worked on as a google doc.
 
-The reports from the Catcher can be derived in multiple ways. 
-There is no requirement that the analysis as[ects generated by the Catcher+analysis be persistent, but it is recommended.
-When possible, this committee recommends using parameterized Jupyter Notebooks that get executed by Papermill.
+At the end of an analysis task, a "report" is generated and produced as a result.
+The reports from the Catcher can be derived in multiple ways and take on multiple formats.
+There is no requirement that the analysis aspects generated by the Catcher+analysis be persistent, but it is recommended.
+When possible, this committee recommends that analysis tasks produce reports in the form of parameterized Jupyter Notebooks that get executed by Papermill.
 These notebooks then get executed and archived to the LFA, where they can be looked at either immediately or at a later date.
-The capability of the notebooks is wide, allowing image analysis via sending commands to the OCPS, queries of the EFD, grabbing of SAL events or data from the butler.
-The data to create any plots etc are also contained in the notebook allowing plots to be modified and re-generated as required.
+The capabilities of the notebooks is vast; allowing image analysis via sending commands to the OCPS, queries of the EFD, grabbing of SAL events or data from the Butler.
+The data to create any plots or other displays are also contained in the notebook allowing plots to be modified and re-generated as required.
 Lastly, the notebooks can be used to create a dataset that gets displayed by a Bokeh Application that is nested inside a LOVE display, which is one of the key use-cases that will be encountered during observations.
 There are details that remain to be solved, specifically aspects such as how to account for multiple reports that can be generated by re-running the same notebook multiple times.
 These are presumed to be solvable problems but will require further investigation that goes beyond the scope of this group.
+
+
+Bokeh Plotting Applications
+''''''''''''''''''''''''''''
 
 Bokeh Applications are extremely flexible in design and can render data from multiple sources if configured to do so.
 This includes SAL events, Butler served information, or files from the LFA.
@@ -231,28 +239,27 @@ The apps can then create dynamic (or static) plots, display images, or even be s
 One caveat is that they can only be used where they are deployed.
 Should they wish to be used at the RSP for instance, they will need to be deployed there as well (and obviously any SAL commands will not work).
 
-Bokeh Plotting Applications
-''''''''''''''''''''''''''''
-
+- Explain why Bokeh was chosen, ability to be inserted into LOVE, fulfills all requirements and satisfies :ref:`pg-D2-Figure_Generation_Requirements`.
+- Add a sentence about other considered options and why they were dropped.
 - Implementation of on-the-fly architecture requires Bokeh to be installed in all development and analysis environments (e.g. the RSP).
 
    - Draft how to turn a notebook-based Bokeh "plot" into an app (see `Simon's draft <https://gist.github.com/SimonKrughoff/cc02f873a2a1518161d3f3a1839be4a5>`_)
    - Draft how to embed said App into LOVE 
-   - Proof-of-concept of "press a button in the Camera Visualiation Tool" and get information from the callback in a Bokeh App
+   - Examples of Bokeh apps and their use is found in the `Proof-of-concept Demonstrations`_ section. 
+
 
 Papermill executed notebooks
 '''''''''''''''''''''''''''''
 
-
 - Suggested implementation for creating on-the-fly reports and re-runable notebooks that will store the parameters used for the execution and generation of plots etc.
 - These will be published to the LFA
+- Possible to perform SAL commands (or get events etc) from the notebook.
+  Can also send information to Bokeh app (if Bokeh app is configured to do so)
+- Can (and should) be unit tested
 
 - TO DO
   - Work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer
   - Appropriate repos and instructions
-
-
-
 
 .. 
    .. important::
@@ -278,7 +285,7 @@ Deliverable 5:
 This will be a prioritized list of which functionalities should be implemented in which order.
 
 
-.. _Other Findings and Recommendations:
+.. _Other Findings and Identified Issues:
 
 Other Findings and Identified Issues
 ====================================
@@ -390,25 +397,30 @@ The examples in the following subsections were proven using data from the summit
 However, due to the recent power losses at the summit, there has been no new data in the last 30-days and therefore they are not presently able to show data.
 This will be remedied once data starts flowing again and further screenshots and evidence of their functionality will be provided.
 
-Creation and display of the jitter plots in Bokeh
+
+.. _demo_jitter:
+
+Creation and display of the Jitter Plots in Bokeh
 -------------------------------------------------
 
 - Link to jitter app
 - Also link to code where it is hosted
 - Add paragraph about deployment of the App.
 
+.. _demo_offset:
 
 Creation of offset measurements in Bokeh
 ----------------------------------------
 
-- Also include that it's possible to put in telescope commands in the GUI
-- Also include that it's possible to put in telescope commands in the GUI
+- Show screenshots and link to example code for application
+- Also include (in the text) that it's possible to put in telescope commands in the GUI
 
 
+.. _demo_callback:
 Offsetting example using Camera Visualiation Tool Callback
 ----------------------------------------------------------
 
-This is currently an action item of a example of what can be done when requirement `FAFF-REQ-025`_ is implemented and will be populated once completed.
+This is currently an action item of a example of what can be done when requirement :ref:`FAFF-REQ-025`_ is implemented and will be populated once completed.
 
 
 

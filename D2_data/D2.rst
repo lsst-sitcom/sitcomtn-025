@@ -153,6 +153,7 @@ FAFF-REQ-007
 
 **Suggested Implementation to fulfil requirement:** Catcher GUI exists and reports the recent results of tasks.
 
+.. _pg-D2-Figure_Generation_Requirements:
 
 Figure Generation Requirements
 ------------------------------
