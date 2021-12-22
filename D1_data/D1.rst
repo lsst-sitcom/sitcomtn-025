@@ -26,14 +26,17 @@ General capabilities and existing functionality is given significantly less atte
 Mount Jitter Measurement and Reporting
 --------------------------------------
 
+The Mount Jitter use-case demonstrates the calculation of mount data during an exposure and the production of a PSF for a quick data quality assessment if certain conditions are met (e.g. the mount shows an unacceptable amount of motion).
+Depending upon those results, a special display is updated and the observer gets alerted such that they can evaluate the issue and possibly change observing strategies.
 For the moment, the `Jitter use-case is hosted on confluence <https://confluence.lsstcorp.org/pages/viewpage.action?spaceKey=LSSTCOM&title=Mount+Jitter+Use-Case>`_.
 
-This is a response to Question 1, and a reference to :ref:`pgD1 Use case1`.
 
 
 Afternoon Calibration Generation
 --------------------------------
 
+Calibrations are meant to be run every afternoon via the scriptQueue.
+The primary items addresed by this use-case are usage of the OCPS but also includes aspects captured in the section regarding `Use-cases for Image Display Capabilities`_
 For the moment, the `Afternoon Calibration Generation use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Use+Cases+for+Calibration+Generation>`_.
 
 .. _pgD1 Automated Fault Report Use-Case:
@@ -41,15 +44,19 @@ For the moment, the `Afternoon Calibration Generation use-case is hosted on conf
 Automated Fault Report Use-Case
 --------------------------------
 
-For the moment, the `Automated Fault Report Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Automated+Fault+Report+Use-Case>`_.
 This use-case is to emphasize that there will be a demand for running analyses and generating artifacts that are not associated with images.
+It also emphasizes the need to generate reports in a way that they can be easily linked/distributed.
+For the moment, the `Automated Fault Report Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Automated+Fault+Report+Use-Case>`_.
 
 
-Active Optics System
---------------------
+Active Optics System (AOS)
+--------------------------
 
-For the moment, the `Active Optics System Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/pages/viewpage.action?pageId=156512863>`_.
+The AOS use-case captures many of the types of plots/figures that will need to be presented.
+It also captures some key functionalities that are required by the image display system.
 Much of this use-case was based on use-cases from the DECam Active Optics System.
+For the moment, the `Active Optics System Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/pages/viewpage.action?pageId=156512863>`_.
+
 
 
 Observer Data Summary Feedback

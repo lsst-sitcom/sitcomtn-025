@@ -221,12 +221,15 @@ FAFF-REQ-013
 
 **Suggested Implementation to fulfill requirement:**  
 When he mouse is moved over the image:
-1. Display the Raft/CCD/Amplifier segment/ and pixel coord within the segment, as well as the absolute coordinate within the focal-plane
-2. Display the RA/DEC corresponding to the position. 
-   This will require the image display to get the RA/DEC from the header service. 
-   The initial implementation will not apply any corrections for optical distortions or focal-plane CCD positioning anomalies, although this might be added in future if needed
-3. Display the (RGB) pixel value and the raw pixel value in ADU units for the selected pixel. 
-Items 1 and 2 will be calculated within the browser, so will be very fast. The raw pixel value in item 3 requires going back to the server to get the raw data at the given coordinates, so will have some lag as the mouse is moved.
+
+- Display the Raft/CCD/Amplifier segment/ and pixel coord within the segment, as well as the absolute coordinate within the focal-plane
+- Display the RA/DEC corresponding to the position. 
+  This will require the image display to get the RA/DEC from the header service. 
+  The initial implementation will not apply any corrections for optical distortions or focal-plane CCD positioning anomalies, although this might be added in future if needed
+- Display the (RGB) pixel value and the raw pixel value in ADU units for the selected pixel. 
+
+The first two items will be calculated within the browser, so will be very fast. 
+Capturing the raw pixel value requires going back to the server to get the raw data at the given coordinates, so will have some lag as the mouse is moved.
 
 
 FAFF-REQ-015
@@ -361,7 +364,7 @@ FAFF-REQ-030
 
 **Current shortcomings:** Currently the image visualization backend sends jpg images to the web browser. jpeg is not a lossless format, so we would like to try sending png images instead (which are lossless). 
 
-**Applicable Use-cases: **
+**Applicable Use-cases:**
 
 **Suggested Implementation to fulfill requirement:** Already built-in to cantaloupe/open-seadragon. It is unclear whether this will have a significant visual impact, but it has been already investigated to be possible and appears easy to try.
 
@@ -487,6 +490,6 @@ FAFF-REQ-025
 
 **Current shortcomings:** Not implemented. 
 
-Applicable Use-cases: Offsetting of the telescope
+**Applicable Use-cases:** Offsetting of the telescope
 
-Suggested Implementation to fulfil requirement: 
+**Suggested Implementation to fulfil requirement:** 

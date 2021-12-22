@@ -216,7 +216,7 @@ A series of new functionality, which for the purposes of this document we have g
 It is still being evaluated if it is required to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
 The Catcher functionality also requires a LOVE display to show which tasks are running, links to generated reports, and alarms or notifications for observers.
 
-More details on the design and implementation can be found in the `Catcher Design Document <https://docs.google.com/document/d/1mbmfqjebOuHIV8CwC7jFHcFKCRMtyBDHPXeGfBO1EPE/edit#>`_) currently being worked on as a google doc.
+More details on the design and implementation can be found in the `Catcher Design Document <https://docs.google.com/document/d/1mbmfqjebOuHIV8CwC7jFHcFKCRMtyBDHPXeGfBO1EPE/edit#>`_ currently being worked on as a google doc.
 
 At the end of an analysis task, a "report" is generated and produced as a result.
 The reports from the Catcher can be derived in multiple ways and take on multiple formats.
@@ -304,16 +304,19 @@ High-level descriptions exist from early in the project, however they are not su
 Although beyond the scope of this working group, it is strongly suggested that a strategy be developed that identifies and documents the use-cases, specifically in regards to the differences between how calibration and on-sky data is handled.
 Currently, the camera diagnostic cluster hardware is on the summit but not being used, largely in part due to a lack of definition of it's use-cases and how it is to interact within the global data analysis workflow of the Rubin Observatory, including whether or not DM tooling must be supported.
 
-This committee strongly recommends a follow-up committee be formed to address questions such as these which must be answered in the near term in order to properly prepare for commissioning.
-
 
 Camera Visualization Tool Functionality Limitations for General Commissioning
 -----------------------------------------------------------------------------
 
 The Camera Visualization Tool, once augmented with the new specifications, will be sufficient for on-the-fly applications but will not be able to satisfy many of the more general commissioning use-cases. 
-This committee was formed to look only at on-the-fly analyses, and the following specifications are out of scope, however, in order for the general commissioning effort to be successful the following functionalities will need to be implemented, or covered by a different suite of tooling.
-Note that this is *not* a complete set of specifications for general commissioning but is merely a subset that we filtered out as being not specifically required for on-the-fly analysis.
-If the capabilites were in place, then the on-the-fly users will certainly take advantage of them.
+The most obvious example is the ability to display and interact with full-frame images once they arrive at NCSA.
+Because the committee was formed to look only at on-the-fly analyses, the following specifications are out of scope, however, for the general commissioning effort to be successful the following functionalities will need to be implemented, or covered by a different suite of tooling.
+
+.. note::
+
+   The items presented here do *not* form a complete set of specifications for general commissioning.
+   They account for merely a subset that we identified as not specifically required for on-the-fly analysis at the mountain top.
+   If the capabilites were in place, then the on-the-fly users would certainly take advantage of them.
 
 FAFF-REQ-014
 ^^^^^^^^^^^^
