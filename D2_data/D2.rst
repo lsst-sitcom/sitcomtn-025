@@ -476,6 +476,8 @@ Interaction between Image Visualization Tool and External Information Displays
 
 This section is to capture requirements that dictate functionality regarding when the user requires additional calculations and/or information be gathered/determined that is not readily available. 
 
+.. _FAFF-REQ-025:
+
 FAFF-REQ-025
 ------------
 
