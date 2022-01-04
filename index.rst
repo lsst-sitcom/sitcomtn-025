@@ -132,7 +132,7 @@ Deliverable 3:
 Content for this section is found in the `original presentation given to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`_.
 
 
-**Tools FIXME: Add a few sentences and links to each item**:
+**Tools** FIXME: Add a few sentences and links to each item:
 
 - Camera Visualization Tool
 - Watcher
@@ -147,12 +147,12 @@ Content for this section is found in the `original presentation given to stakeho
 
 **Available Computing Power:**
 
-The following computing resources are available for use but the usage of each is not yet well planned and/or dccumented.
+The following computing resources are available for use but how the hardware will be utilizedis not yet well planned and/or documented.
 
 - Camera Diagnostic Cluster
 - Commissioning Cluster (Antu)
    
-Add discussion with regards to how these tools are used for on-sky data and calibration data? Could also put this in the `Other Findings and Identified Issues`_  section.
+FIXME: Add discussion with regards to how these tools are used for on-sky data and calibration data? Could also put this in the `Other Findings and Identified Issues`_  section.
 
 .. _Deliverable 4:
 
@@ -212,7 +212,7 @@ Implementing this type of capability requires numerous pieces to work together.
 A "Catcher CSC"
 '''''''''''''''''
 
-A series of new functionality, which for the purposes of this document we have grouped into a single "Catcher CSC," is required to handle the low-level coordiation of identifying when a specific condition is met, then launching and monitoring an analysis process.
+A series of new functionality, which for the purposes of this document we have grouped into a single "Catcher CSC" is required to handle the low-level coordiation of identifying when a specific condition is met, then launching and monitoring an analysis process.
 It is still being evaluated if it is required to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
 The Catcher functionality also requires a LOVE display to show which tasks are running, links to generated reports, and alarms or notifications for observers.
 
@@ -437,6 +437,7 @@ TO DO BEFORE FINAL REPORT SUBMISSION
 
    Remove this section before submitting
 
+- Remove FIXME and TBRs
 - Move confluence content into this technote where appropriate. 
   Prints of PDFs may be sufficient.
 

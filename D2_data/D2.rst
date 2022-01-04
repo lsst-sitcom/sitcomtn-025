@@ -273,14 +273,14 @@ FAFF-REQ-018
 
 **Rationale:** This was mentioned as a requirement in ::dmtn:`126`` (sec. 4.9). 
 
-**Priority:** 2?
+**Priority:** 2 (TBR)
 
 **Current shortcomings:** Not implemented
 
 **Applicable Use-cases:** 
 
 **Suggested Implementation to fulfill requirement:** Supply a list of supported kernels/algorithms. 
-Should imply a constraint that the filter must be able to run in X seconds.
+Should imply a constraint that the filter must be able to run in X (TBR) seconds.
 Examples could include boxcar smoothing.
 This is very fast to do for some filters if you do it in Fourier space, with the caveat, you have to ignore mask planes, etc.
 
@@ -292,13 +292,13 @@ FAFF-REQ-019
 
 **Rationale:** This is useful for image orientation on the sky (North up, East Right is the standard).
 
-**Priority:** 1 (but not mission critical so could be seen as a 3)
+**Priority:** 1 (TBR, not mission critical so could be seen as a 3)
 
 **Current shortcomings:** Rotation available but not turned on. Unsure about a flip.
 
 **Applicable Use-cases:** 
 
-**Suggested Implementation to fulfill requirement:** Provide a list of rotations (0, 90, 180, -90), then a N up, then a "custom" option.
+**Suggested Implementation to fulfill requirement:** Provide a list of rotations (0, 90, 180, -90), then a N up, then a, "custom" option.
 
 
 FAFF-REQ-027
@@ -322,7 +322,7 @@ FAFF-REQ-028
 
 **Specification:** Display the Equatorial Coordinate grid over the image (other coordinate systems could be supported).  The grid should be (automatically) adaptive so that it shows about the right scale as the user zooms in and out.
 
-**Rationale:** As with measurement (FAFF-REQ-028) estimation of the scale of things on images is very difficult by eye.  Having a reference grid is useful in putting the distribution of sources on images in context.
+**Rationale:** As with measurement (`FAFF-REQ-028`_) estimation of the scale of things on images is very difficult by eye.  Having a reference grid is useful in putting the distribution of sources on images in context.
 
 **Priority:** 1 (ComCam)
 
