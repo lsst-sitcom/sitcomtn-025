@@ -151,42 +151,91 @@ Nublado (Jupyter Notebook) Interface
 ''''''''''''''''''''''''''''''''''''
 
 .. patrick writing this
+The summit `Nublado interface <https://summit-lsp.lsst.codes/>`_ (VPN required) provides the user with a Jupyter Lab interface and the required libraries/packages to perform standard observatory operations including sending commands and running SAL scripts.
+It can also be used to query the EFD.
+This tool is setup to mimick the `RSP`_ and test-stand environments to the maximum extent possible, providing all the functionalities of a Jupyter Notebook but with direct access to the control system.
+Observers are expected to use this tool to perform commands or sequences that are not encapsulated into a SAL script.
+They are also useful for on-the-fly analysis and/or custom monitoring.
+
 
 Camera Visualization Tool
 ''''''''''''''''''''''''''
 
 .. tony writing this
 
-EFD and LFA
-'''''''''''
-
+Engineering Facilities Database and Large File Annex
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. Patrick writing this
+
+The `Engineering Facilities Database (EFD) <https://sqr-034.lsst.io/#introduction>`_ records all commands, events, and telemetry sent over the DDS control network.
+This content essentially tracks the observatory state as a function of time and is very useful in diagnosing issues and understanding (both desired and undesired) operational behaviours.
+The database is best queried using the `EFD client <https://efd-client.lsst.io/>`_ from the `Nublado (Jupyter Notebook) Interface`_ (or any python-based method/script) when making custom plots.
+Accessing the EFD, and specifically the other instances of the data, is found in `SQR-034 <https://sqr-034.lsst.io/#efd-deployments>`_.
+However, the `Chronograf`_ graphical front-end offers a nice solution for building simple plots (dashboards).
+
+The `Large File Annex (LFA) <https://tstn-029.lsst.io/>`_ contains files over ~1 MB that are accessible both from the summit and the `RSP`_.
+When a file is published to the LFA its presence (and location of the file) is published via SAL/DDS and therefore the location of LFA files can be found via an EFD query.
+It is anticipated that artifacts generated from automated on-the-fly analyses will be stored in this area.
+An example of this would be the `Papermill Executed Parameterized Notebooks`_.
+
 
 Chronograf
 ''''''''''
 
-.. Patrick writing this
+The `summit-based Chronograf interface <https://chronograf-summit-efd.lsst.codes/>`_ (VPN required) provides a user-friendly graphical interface to the each `deployed instance of the EFD <https://sqr-034.lsst.io/#efd-deployments>`_.
+It is particularily useful for creating visualization dashboards to show the current status of the observatory when the LOVE functionality is either not yet functional or simply not planned to be implemented.
+It is not well suited for complex queries or figures and previous queries/plots are not easily replicated.
+Furthermore, it always displays the last event seen.
+Therefore if a CSC crashes, it will always show the last published state.
+For this reason (and many others), it's not an appropriate substitute for a true status GUI, such as what is being provided by the `LOVE`_ interface.
 
 Watcher
 '''''''
 
 .. Patrick writing this
 
+The `Watcher CSC <https://ts-watcher.lsst.io/>`_ monitors control components listening for data that signals an alarm to the observer.
+The alarms are defined by a series of "rules" which are defined and added to the package.
+The CSC itself is not a display tool nor does it have any display functionality.
+When condition defined by an rule is met, an alarm is generated and the observer is alerted via a LOVE screen.
+The alarm has a series of levels and audible alerts are sent out via LOVE, as well as a visual notification.
+Once the alarm is acknowledged by the observer then alert is considered to be completed.
+There is no feedback or interaction for the observer beyond the acknowledgment to the alarm.
+
 SAL Scripts
 '''''''''''
 
 .. Patrick writing this
 
+`SAL scripts <https://ts-salobj.lsst.io/sal_scripts.html#lsst-ts-salobj-sal-scripts>`_ are a series of coordinated sequences, often consisting of commands to CSCs, that are executed by the `ScriptQueue <https://ts-scriptqueue.lsst.io/>`_.
+It is anticipated that most standard operations will utilize scripts.
+Also possible, although not standard practice, is to manually execute a script from the `Nublado (Jupyter Notebook) Interface`_.
+From within a SAL script, users can send standard commands to components as well as send data to the `OCPS`_ for processing.
+The script can then either wait for the analysis to complete and continue, with the ability to act based on the result, or launch the process (e.g. image reduction) and continue executing the script.
+Scripts are not intended to perform any data analysis and do not produce artifacts.
+They can not display any figures nor report customized results (only status).
+The monitoring and execution of a SAL Scripts progress is done via the LOVE ScriptQueue GUI.
+
+
 OCPS
 '''''''
+The `Observatory Controlled Pipeline Service (OCPS) <https://dmtn-133.lsst.io/>`_ is a CSC which allows observers (and SAL Scripts) to execute pipeTasks to perform data reductions and analyses.
+The CSC runs on the summit but the data processing is currently running at the base on the commissioning cluster (although it may be relocated to the summit).
+The OCPS is not a display tool, but can be used to produce artifacts (such as images, spectra etc) that observers want to display.
+The current scope of this service is to only provide image-related processing.
+It cannot currently query the EFD.
 
-.. Patrick writing this
+At this time, the OCPS is being used to perform the analysis of daily calibrations executed from the scriptQueue.
 
 
 Prompt Processing Data Products
 '''''''''''''''''''''''''''''''
+The Prompt Processing Pipeline is expected to run at the United State Data Facility (USDF).
+Within 60s, the images taken on-sky get reduced and a series of data products are made available.
+A small number of these data products are sent back to the summit via the  `via the Telemetry Gateway <https://docushare.lsst.org/docushare/dsweb/Get/LSE-72#%5B%7B%22num%22%3A54%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C69%2C205%2C0%5D>`_.
+This service is not yet in place.
 
-and delivery `via the Telemetry Gateway <https://docushare.lsst.org/docushare/dsweb/Get/LSE-72#%5B%7B%22num%22%3A54%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C69%2C205%2C0%5D>`_.
+It is expected that metrics coming from prompt processing (and `faro`_) will be used in on-the-fly displays.
 
 .. Patrick writing this
 
@@ -267,11 +316,12 @@ The largest piece of missing functionalty is the framework to perform on-the-fly
 Implementing this type of capability requires numerous pieces to work together.
 
 
-"Catcher CSC"
+Catcher CSC
 '''''''''''''
 
-A series of new functionality, which for the purposes of this document we have grouped into a single "Catcher CSC" is required to handle the low-level coordiation of identifying when a specific condition is met, then launching and monitoring an analysis process.
+A series of new functionality, which for the purposes of this document we have grouped into a single "Catcher" Controllable SAL Component (CSC) is required to handle the low-level coordiation of identifying when a specific condition is met, then launching and monitoring an analysis process.
 It is still being evaluated if it is required to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
+For the purposes of this document we will assume the functionality is to be captured in a new CSC.
 The Catcher functionality also requires a LOVE display to show which tasks are running, links to generated reports, and alarms or notifications for observers.
 
 More details on the design and implementation can be found in the `Catcher Design Document <https://docs.google.com/document/d/1mbmfqjebOuHIV8CwC7jFHcFKCRMtyBDHPXeGfBO1EPE/edit#>`_ currently being worked on as a google doc.
