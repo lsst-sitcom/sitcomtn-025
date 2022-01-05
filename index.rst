@@ -228,8 +228,8 @@ It cannot currently query the EFD.
 At this time, the OCPS is being used to perform the analysis of daily calibrations executed from the scriptQueue.
 
 
-Prompt Processing Data Products
-'''''''''''''''''''''''''''''''
+Prompt Processing
+'''''''''''''''''
 The Prompt Processing Pipeline is expected to run at the United State Data Facility (USDF).
 Within 60s, the images taken on-sky get reduced and a series of data products are made available.
 A small number of these data products are sent back to the summit via the  `via the Telemetry Gateway <https://docushare.lsst.org/docushare/dsweb/Get/LSE-72#%5B%7B%22num%22%3A54%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C69%2C205%2C0%5D>`_.
@@ -242,9 +242,19 @@ It is expected that metrics coming from prompt processing (and `faro`_) will be 
 faro
 '''''''
 
-(after burner to the OCPS and prompt processing)
-
 .. Keith writing this
+
+   Link to github repo:
+   https://github.com/lsst/faro
+
+`faro <https://pipelines.lsst.io/v/daily/modules/lsst.faro/index.html>`_ is a framework for automatically and efficiently computing scientific performance metrics on the outputs of the LSST Science Pipelines for units of data of varying granularity, ranging from single-detector to full-survey summary statistics, and persists the results as scalar metric values alongside the input data products in the same butler repo.
+
+In the "first-look analysis" context, it is intended that faro would be run as an afterburner to the `OCPS`_ and `Prompt Processing`_ (run automatically as part of the same pipeline) and would compute scalar metrics to quantify the performance of individual visits as they are acquired. 
+For example, faro could be used to estimate the effective depth of individual images by computing the flux of a point source that would be measured with signal-to-noise of 10, or to measure variations in effective depth across the focal plane that would be indicative of variable atmosphere transparency. 
+The intent is that these metrics would be available within minutes to the observers to inform nighttime operations. 
+faro is designed to be modular and configurable so that additional metrics can be readily added to support summit operations.
+
+faro is NOT itself a visualization tool, but rather generates scalar metric values that could be used as input to visualization tools.
 
 
 Available Computing Power
