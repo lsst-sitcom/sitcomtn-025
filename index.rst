@@ -47,6 +47,7 @@
 
 .. _charge: https://sitcomtn-013.lsst.io/
 .. _DMTN-126: https://DMTN-126.lsst.io/
+.. _RSP: https://nb.lsst.io/
 
 .. note::
 
@@ -129,30 +130,87 @@ Deliverable 3:
       - Report on their status, limitations, and where their current requirements may need to be expanded to cover any increase in scope
       - Tools which were considered but found to be inadequate must also be reported
 
-Content for this section is found in the `original presentation given to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`_.
+This section contains a summary of the tools currently available for use that are applicable to on-the-fly operations.
+What follows is a list of the tools, each with a short description that contain links to pertinent information.
+
+A high-level overview of these tools and computering resources was presented at the `original presentation given to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`_.
+These slides may contain additional information and/or a more detailed description and use-case.
+
+Currently Available Tools
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following tools are released for general use and are expected to be used in the context of on-the-fly information gathering and display.
+Some remain under active development whereas others are considered nearly complete.
+
+LOVE
+''''
+
+.. tiago writing this
+
+Nublado (Jupyter Notebook) Interface
+''''''''''''''''''''''''''''''''''''
+
+.. patrick writing this
+
+Camera Visualization Tool
+''''''''''''''''''''''''''
+
+.. tony writing this
+
+EFD and LFA
+'''''''''''
+
+.. Patrick writing this
+
+Chronograf
+''''''''''
+
+.. Patrick writing this
+
+Watcher
+'''''''
+
+.. Patrick writing this
+
+SAL Scripts
+'''''''''''
+
+.. Patrick writing this
+
+OCPS
+'''''''
+
+.. Patrick writing this
 
 
-**Tools** FIXME: Add a few sentences and links to each item:
+Prompt Processing Data Products
+'''''''''''''''''''''''''''''''
 
-- Camera Visualization Tool
-- Watcher
-- faro (after burner to the OCPS and prompt processing)
-- SAL Scripts
-- OCPS 
-- Nublado Interface (USDF, Summit etc) with Jupyter Notebook Functionality
-- LOVE
-- Chronograph 
-- EFD and LFA
-- Prompt Processing Data Products and delivery `via the Telemetry Gateway <https://docushare.lsst.org/docushare/dsweb/Get/LSE-72#%5B%7B%22num%22%3A54%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C69%2C205%2C0%5D>`_.
+and delivery `via the Telemetry Gateway <https://docushare.lsst.org/docushare/dsweb/Get/LSE-72#%5B%7B%22num%22%3A54%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C69%2C205%2C0%5D>`_.
 
-**Available Computing Power:**
+.. Patrick writing this
 
-The following computing resources are available for use but how the hardware will be utilizedis not yet well planned and/or documented.
+faro
+'''''''
+
+(after burner to the OCPS and prompt processing)
+
+.. Keith writing this
+
+
+Available Computing Power
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. Robert writing this
+
+The following computing resources are available for use but how the hardware will be utilized is not yet well planned and/or documented.
 
 - Camera Diagnostic Cluster
 - Commissioning Cluster (Antu)
    
-FIXME: Add discussion with regards to how these tools are used for on-sky data and calibration data? Could also put this in the `Other Findings and Identified Issues`_  section.
+
+The use of these clusters remains unclear and is called out in the `Other Findings and Identified Issues`_ section, under the :ref:`Diagnostic_and_Commissioning_Cluster` heading.
+
 
 .. _Deliverable 4:
 
@@ -209,8 +267,8 @@ The largest piece of missing functionalty is the framework to perform on-the-fly
 Implementing this type of capability requires numerous pieces to work together.
 
 
-A "Catcher CSC"
-'''''''''''''''''
+"Catcher CSC"
+'''''''''''''
 
 A series of new functionality, which for the purposes of this document we have grouped into a single "Catcher CSC" is required to handle the low-level coordiation of identifying when a specific condition is met, then launching and monitoring an analysis process.
 It is still being evaluated if it is required to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
@@ -232,6 +290,8 @@ These are presumed to be solvable problems but will require further investigatio
 
 Bokeh Plotting Applications
 ''''''''''''''''''''''''''''
+.. simon will write this
+
 
 Bokeh Applications are extremely flexible in design and can render data from multiple sources if configured to do so.
 This includes SAL events, Butler served information, or files from the LFA.
@@ -239,7 +299,7 @@ The apps can then create dynamic (or static) plots, display images, or even be s
 One major advantage of Bokeh is that the very high majority of the application can be developed inside a notebook.
 Once functioning as expected, it can be ported to a python file with minimal intervention required.
 One caveat is that they can only be used where they are deployed.
-Should they wish to be used at the RSP for instance, they will need to be deployed there as well (and obviously any SAL commands will not work).
+Should they wish to be used at the Rubin Science Platform (`RSP`_) for instance, they will need to be deployed there as well (and obviously any SAL commands will not work).
 
 - Explain why Bokeh was chosen, ability to be inserted into LOVE, fulfills all requirements and satisfies :ref:`pg-D2-Figure_Generation_Requirements`.
 - Add a sentence about other considered options and why they were dropped.
@@ -252,6 +312,8 @@ Should they wish to be used at the RSP for instance, they will need to be deploy
 
 Papermill Executed Parameterized Notebooks
 '''''''''''''''''''''''''''''''''''''''''''
+
+.. tiago will write this
 
 - Suggested implementation for creating on-the-fly reports and re-runable notebooks that will store the parameters used for the execution and generation of plots etc.
 - These will be published to the LFA
@@ -298,6 +360,7 @@ This section contains information regarding numerous issues which were identifie
 
 The recommendation of this committee is that a follow-up committee be created to address these items as they are required to successfully commission the observatory.
 
+.. _Diagnostic_and_Commissioning_Cluster:
 
 Diagnostic And Commissioning Cluster Usage Needs Definition
 -----------------------------------------------------------
@@ -326,7 +389,7 @@ FAFF-REQ-014
 
 **Specification:** The camera visualization tool shall support being deployed in places where historical data is available.
 
-**Rationale:** This will need to be available to people using the RSP and commissioning cluster.
+**Rationale:** This will need to be available to people using the `RSP`_ and commissioning cluster.
 The general commissioning / SV use case is to be able to examine aspects of image quality that cross detector boundaries (e.g., stray and scattered light, satellite trails, pervasive issues across detectors) for which full focal plane visualization is critical. 
 Of course, these studies will involve looking at images that date back in time, and therefore will need to be executed from the RSP (or other processing center).
 This could be useful even for summit operations if it allows display of historic images (for comparison with new images).
@@ -335,13 +398,13 @@ The historical data on the summit is currently limited to 30 days.
 **Priority: 1**
 
 **Current shortcomings:** Firefly may not meet all of the requirements for all image visualization, specifically in regards to full-frame visualization.
-Deployment not nested into current RSP deployment strategy.
+Deployment not nested into current `RSP`_ deployment strategy.
 It requires a mechanism to locate the data for a given obsid, but this is also presumably be possible. 
 
 **Applicable Use-cases:** Rapid per sensor image display and inspection.
 
 **Suggested Implementation to fulfill requirement:** 
-Deploy the camera visualization tool and Bokeh apps as part of the standard RSP packaging.
+Deploy the camera visualization tool and Bokeh apps as part of the standard `RSP`_ packaging.
 Installing the camera image visualization server at the USDC (SLAC) is certainly feasible. 
 
 
