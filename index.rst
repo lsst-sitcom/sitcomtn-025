@@ -146,6 +146,16 @@ LOVE
 ''''
 
 .. tiago writing this
+LOVE is a web-based user inteface for the observatory control system. 
+It is currently available at the `summit <http://amor01.cp.lsst.org/>` (VPN required) and all other test stands.
+
+The system is developed using the popular React JavaScript framework for the frontend, with Python in the backend.
+It contains an editing tool that allow users to create and customize views, but this feature rely exclusively on existing widget-like components.
+Extending the system beyond the vendor-provided "widgets" would require some knowledge of React and JavaScript, which is not common in the project.
+Nevertheless, LOVE does contain a especial widget that allows us to embed other web pages into a particular view. 
+This could be used, for instance, to embed `Bokeh Plotting Applications`_ alongside other LOVE components.
+
+
 
 Nublado (Jupyter Notebook) Interface
 ''''''''''''''''''''''''''''''''''''
@@ -375,11 +385,50 @@ Papermill Executed Parameterized Notebooks
 
 .. tiago will write this
 
-- Suggested implementation for creating on-the-fly reports and re-runable notebooks that will store the parameters used for the execution and generation of plots etc.
-- These will be published to the LFA
-- Possible to perform SAL commands (or get events etc) from the notebook.
-  Can also send information to Bokeh app (if Bokeh app is configured to do so)
-- Can (and should) be unit tested
+`Papermill`_ introduces the concept of *parameterized notebooks* and provides tools to execute them in a batch-like mode.
+
+.. _Papermill: https://papermill.readthedocs.io/en/latest/
+
+*Parameterized notebooks* are similar to regular Jupyter notebooks.
+The process consists of:
+
+  - identifing variables in the notebook that one wants to expose as parameters,
+  - have all these variables defined in a single cell (ideally, with default values),
+  - tagging the cell with the "parameters" keyword.
+
+More details on how to parameterize a notebook on a particular environment can be found in the `papermill usage documentation page <https://papermill.readthedocs.io/en/latest/usage-parameterize.html>`__.
+
+Notebooks can then be executed using `Papermill`_ command line interface or throught its Python API.
+
+Benefits of using `Papermill`_ includes:
+
+  - Simplify the process of creating on-the-fly reports and re-runable notebooks that will store the parameters used for the execution and generation of plots etc.
+
+    - Users would be able to develop their reports directly on notebooks, with practicaly no overhead in integrating them with the system aftewards.
+
+    - The reports can be stored directly as notebooks and/or be expored and rendered as webpages with `nbconvert <https://nbconvert.readthedocs.io/en/latest/>`__.
+
+  - Store notebooks in the LFA.
+
+    `Papermill`_ can save the output directly to the s3bucket, which is used as the backend for the LFA.
+
+  - Possible to interact with the control system with salobj from the notebooks, the same way we execute tasks with the control system from nublado.
+
+  - Can also send information to Bokeh app (if Bokeh app is configured to do so).
+
+Some challenges with using Jupyter Notebooks and Papermill are:
+
+  - It is notably difficult to develop unit testing for Jupyter Notebooks.
+
+    `Papermill`_ does make it possible to write unit tests for Jupyter Notebooks, but certain tasks (like using mocks to isolate external libraries) can be exceedingly difficult. 
+
+  - Overhead on loading the environment.
+
+    When executing a notebook throught `Papermill`_, there is an overhead associated with loading the environment prior to the execution by the Jupyter lab server.
+    The size of the overhead depends on the environment which the notebook is running.
+    
+    For reference, in the ScriptQueue environment the overhead is about 2s.
+    At the same time, some highly customized users environments on nublado take up to 10s to load.
 
 - TO DO
   - Work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer
