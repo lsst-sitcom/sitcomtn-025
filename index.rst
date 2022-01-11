@@ -360,25 +360,30 @@ These are presumed to be solvable problems but will require further investigatio
 
 Bokeh Plotting Applications
 ''''''''''''''''''''''''''''
-.. simon will write this
 
+Multiple plotting packages were considered before ultimately settling on Bokeh.
+The majority of Python users are familiar with matplotlib and therefore finding a system to support this was the preferred option.
+However, matplotlib is very limited with regards to the creation of dynamic plots, for this reason the packages of vega-lite and Bokeh were considered.
+Both of these systems could be directly integrated into the LOVE framework with the currently existing functionality.
+Vega-lite is able to create apps to embed on webpages, however, Vega-Lite does not expose the handles for more sophisticated call-back actions that go beyond the plotting itself. 
+This was the most significant inadequacy of Vega-lite however, the capabilities of vega-lite are also limited and certain use-cases required the use of Vega, which means ultimately working javaScript; to which very few people on the project have familiarity.
+Based on the evaluation of the use-cases Bokeh was the preferred solution to support all of our requirements (see :ref:`pg-D2-Figure_Generation_Requirements`)
+Furthermore, it is already familiar to certain people on the project and can be easily integrated into our current system design.
 
 Bokeh Applications are extremely flexible in design and can render data from multiple sources if configured to do so.
 This includes SAL events, Butler served information, or files from the LFA.
 The apps can then create dynamic (or static) plots, display images, or even be setup to send commands to move the telescope based on a calculation (e.g. offsetting to a star).
 One major advantage of Bokeh is that the very high majority of the application can be developed inside a notebook.
 Once functioning as expected, it can be ported to a python file with minimal intervention required.
-One caveat is that they can only be used where they are deployed.
+
+As part of the selection criteria, demonstator projects were created and executed to verify certain aspects of the required functionality and usability.
+Examples of Bokeh apps and their use is found in the `Proof-of-concept Demonstrations`_ section. 
+It was possible to build out and deploy the Jitter application in a few hours.
+The centering application, which can be used for determining offsets, took roughly two hours. 
+Rough notes on how to turn a notebook-based Bokeh plot into an application can be found as part of `Simon's draft <https://gist.github.com/SimonKrughoff/cc02f873a2a1518161d3f3a1839be4a5>`_.
+These will be turned into more formal instructions before the close-out of this working group.
+One caveat is that Bokeh Apps can only be used where they are deployed.
 Should they wish to be used at the Rubin Science Platform (`RSP`_) for instance, they will need to be deployed there as well (and obviously any SAL commands will not work).
-
-- Explain why Bokeh was chosen, ability to be inserted into LOVE, fulfills all requirements and satisfies :ref:`pg-D2-Figure_Generation_Requirements`.
-- Add a sentence about other considered options and why they were dropped.
-- Implementation of on-the-fly architecture requires Bokeh to be installed in all development and analysis environments (e.g. the RSP).
-
-   - Draft how to turn a notebook-based Bokeh "plot" into an app (see `Simon's draft <https://gist.github.com/SimonKrughoff/cc02f873a2a1518161d3f3a1839be4a5>`_)
-   - Draft how to embed said App into LOVE 
-   - Examples of Bokeh apps and their use is found in the `Proof-of-concept Demonstrations`_ section. 
-
 
 Papermill Executed Parameterized Notebooks
 '''''''''''''''''''''''''''''''''''''''''''
@@ -429,10 +434,6 @@ Some challenges with using Jupyter Notebooks and Papermill are:
     
     For reference, in the ScriptQueue environment the overhead is about 2s.
     At the same time, some highly customized users environments on nublado take up to 10s to load.
-
-- TO DO
-  - Work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer
-  - Appropriate repos and instructions
 
 .. 
    .. important::
@@ -612,6 +613,10 @@ TO DO BEFORE FINAL REPORT SUBMISSION
 - Remove FIXME and TBRs
 - Move confluence content into this technote where appropriate. 
   Prints of PDFs may be sufficient.
+- `Bokeh Plotting Applications`_ section requires more detailed notes on how to go from functionality developed in a notebook, to an app, and then how to get that embedded in LOVE.
+- Create repo for building apps with template(s)
+- Work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer. 
+  This may be too much scope and depends upon when the Catcher demonstrator can be implemented.
 
 .. .. rubric:: References
 
