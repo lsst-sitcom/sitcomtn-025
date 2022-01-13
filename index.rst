@@ -66,7 +66,7 @@ The working group accumulated a series of use-cases that represent the functiona
 By analyzing the use-cases and exploring how they would be accomplished using our current toolset, it has been determined that a large fraction of the necessary capabilities are already scoped and implementend but require augmenting certain functionalities to enable proper interfacing and inter-operability.
 However, there exist a important gaps that require new software, selection of adopted packages, and the development of examples such that users can use the components effectively. 
 This is especially apparent with regards to on-the-fly analysis tasks and ability to support the diversity of figures that will be required for monitoring, system characterization and even global system debugging.
-A new CSC will need to be developed to handle the creation and management of analysis tasks as well as the alerting of newly created artifacts to users.
+A new CSC (Controllable SAL Component) will need to be developed to handle the creation and management of analysis tasks as well as the alerting of newly created artifacts to users.
 A design and scope estimate for this CSC has been developed and all the information is ready to support the filing of an LCR if required.
 Dynamic figures that are to be embedded into the LOVE system will be required to use the Bokeh package to create an application, which will then be deployed using Kubernetes.
 
@@ -86,7 +86,7 @@ Introduction
 
 The First-Look Analysis and Feedback Functionality (FAFF) Breakout Group met approximately weekly starting June 30, 2021 and released it's first report on January 14, 2022.
 The report consists of the use-cases that were used to define the functionality, requirements put on by those use-cases, and recommendations for new functionality.
-It should be noted that demonstrators of some of the new functionality were performed, which lengthened the response process, but also resulted in the building of a proof-of-concept tool which enhances the viability of the recommendations.
+We created demonstrations of new functionality in several cases, which lengthened the response process, but also resulted in the building of proof-of-concept tools which enhances the viability of the recommendations.
 
 Some of the responses to the `charge`_ of the FAFF group were built off an Image Display Working Group who reported what was required by the data management group for image display and manipulation capabilities in `DMTN-126`_.
 That group was not focused on on-the-fly functionality but many of the findings were applicable and taken into account here when it made sense to do so.
@@ -103,8 +103,8 @@ In each of the subsections
 
 .. _Deliverable 1:
 
-Deliverable 1:
---------------
+Deliverable 1: Use-Cases
+------------------------
 
 .. note:: 
 
@@ -114,21 +114,21 @@ Deliverable 1:
 
       - Use-cases should be complete, including which inputs are required (e.g. SAL Script, EFD, LFA, external source), desired manipulations, logic-based operations/calculations, and how the desired artefacts are presented to the user (e.g. display images and/or graphs).
   
-A solicitation for use-cases was made to the Rubin community via the Commissioning meeting and a general call on the Slack channel.
+A solicitation for use-cases was made to the Project stagg via the Commissioning meeting and a general call on the Slack channel.
 A meeting was held to define what the group was looking for and provided examples.
 Members were also encouraged to pass the call for information to whomever may be able to provide useful input.
 The responses from the community can be found `here <https://confluence.lsstcorp.org/display/LSSTCOM/2021-05-14+On-the-fly+analysis+for+observers+Meeting+Minutes#id-20210514OntheflyanalysisforobserversMeetingMinutes-On-the-flyAnalysisUse-Cases>`_.
 
 Many of the examples from the community had significant overlap of information.
-To amalgamate the information and create a basis from which to work, a series of standardized use-cases were developed which followed a common format and layout.
+To amalgamate the information and create a basis from which to work, a series of standardized use-cases were developed that followed a common format and layout.
 A standardized summary was also created to ease comparisons between use-cases.
 
 The standardized use-cases associated with this deliverable are found at :ref:`pg-D1-Use-cases` page.
 
 .. _Deliverable 2:
 
-Deliverable 2:
---------------
+Deliverable 2: Requirements
+---------------------------
 
 .. note:: 
 
@@ -146,8 +146,8 @@ The detailed list of requirements is found on :ref:`pg-D2-Requirements`.
 
 .. _Deliverable 3:
 
-Deliverable 3:
---------------
+Deliverable 3: Currently Available Tools/Systems
+------------------------------------------------
 
 .. note:: 
 
@@ -156,7 +156,7 @@ Deliverable 3:
    1. A summary of the suite of currently available tools/systems that may help fulfil the required functionality.
 
       - Report on their status, limitations, and where their current requirements may need to be expanded to cover any increase in scope
-      - Tools which were considered but found to be inadequate must also be reported
+      - Tools that were considered but found to be inadequate must also be reported
 
 This section contains a summary of the tools currently available for use that are applicable to on-the-fly operations.
 What follows is a list of the tools, each with a short description that contain links to pertinent information.
@@ -176,12 +176,12 @@ LSST Observatory Visualization Environement (LOVE)
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 
 LOVE is a web-based user inteface for the observatory control system. 
-It is currently available at the `summit <http://amor01.cp.lsst.org/>` (VPN required) and all other test stands.
+It is currently available at the `summit <http://amor01.cp.lsst.org/>`_ (VPN required) and all other test stands.
 
 The system is developed using the popular React JavaScript framework for the frontend, with Python in the backend.
-It contains an editing tool that allow users to create and customize views, but this feature rely exclusively on existing widget-like components.
+It contains an editing tool that allow users to create and customize views, but this feature relies exclusively on existing widget-like components.
 Extending the system beyond the vendor-provided "widgets" would require some knowledge of React and JavaScript, which is not common in the project.
-Nevertheless, LOVE does contain a especial widget that allows us to embed other web pages into a particular view. 
+Nevertheless, LOVE does contain a special widget that allows us to embed other web pages into a particular view. 
 This could be used, for instance, to embed `Bokeh Plotting Applications`_ alongside other LOVE components.
 
 
@@ -191,9 +191,9 @@ Nublado (Jupyter Notebook) Interface
 
 The summit `Nublado interface <https://summit-lsp.lsst.codes/>`_ (VPN required) provides the user with a Jupyter Lab interface and the required libraries/packages to perform standard observatory operations including sending commands and running SAL scripts.
 It can also be used to query the EFD.
-This tool is setup to mimick the `RSP`_ and test-stand environments to the maximum extent possible, providing all the functionalities of a Jupyter Notebook but with direct access to the control system.
+This tool is set up to mimic the `RSP`_ and test-stand environments to the maximum extent possible, providing all the functionalities of a Jupyter Notebook but with direct access to the control system.
 Observers are expected to use this tool to perform commands or sequences that are not encapsulated into a SAL script.
-They are also useful for on-the-fly analysis and/or custom monitoring.
+The Nublado interface is also useful for on-the-fly analysis and/or custom monitoring.
 
 
 Camera Visualization Tool
@@ -212,7 +212,7 @@ Engineering Facilities Database and Large File Annex
 The `Engineering Facilities Database (EFD) <https://sqr-034.lsst.io/#introduction>`_ records all commands, events, and telemetry sent over the DDS control network.
 This content essentially tracks the observatory state as a function of time and is very useful in diagnosing issues and understanding (both desired and undesired) operational behaviours.
 The database is best queried using the `EFD client <https://efd-client.lsst.io/>`_ from the `Nublado (Jupyter Notebook) Interface`_ (or any python-based method/script) when making custom plots.
-Accessing the EFD, and specifically the other instances of the data, is found in `SQR-034 <https://sqr-034.lsst.io/#efd-deployments>`_.
+Instructions on how to access the EFD, and specifically the other instances of the data, are found in `SQR-034 <https://sqr-034.lsst.io/#efd-deployments>`_.
 However, the `Chronograf`_ graphical front-end offers a nice solution for building simple plots (dashboards).
 
 The `Large File Annex (LFA) <https://tstn-029.lsst.io/>`_ contains files over ~1 MB that are accessible both from the summit and the `RSP`_.
@@ -228,36 +228,36 @@ The `summit-based Chronograf interface <https://chronograf-summit-efd.lsst.codes
 It is particularily useful for creating visualization dashboards to show the current status of the observatory when the LOVE functionality is either not yet functional or simply not planned to be implemented.
 It is not well suited for complex queries or figures and previous queries/plots are not easily replicated.
 Furthermore, it always displays the last event seen.
-Therefore if a CSC crashes, it will always show the last published state.
+Therefore if a Controllable SAL Component (CSC) crashes, it will always show the last published state.
 For this reason (and many others), it's not an appropriate substitute for a true status GUI, such as what is being provided by the `LOVE`_ interface.
 
 Watcher
 '''''''
 
 The `Watcher CSC <https://ts-watcher.lsst.io/>`_ monitors control components listening for data that signals an alarm to the observer.
-The alarms are defined by a series of "rules" which are defined and added to the package.
+The alarms are defined by a series of "rules" that are defined and added to the package.
 The CSC itself is not a display tool nor does it have any display functionality.
 When condition defined by an rule is met, an alarm is generated and the observer is alerted via a LOVE screen.
 The alarm has a series of levels and audible alerts are sent out via LOVE, as well as a visual notification.
-Once the alarm is acknowledged by the observer then alert is considered to be completed.
-There is no feedback or interaction for the observer beyond the acknowledgment to the alarm.
+Once the alarm is acknowledged by the observer the alert is considered to be completed.
+There is no feedback or interaction for the observer beyond the acknowledgment of the alarm.
 
 SAL Scripts
 '''''''''''
 
 `SAL scripts <https://ts-salobj.lsst.io/sal_scripts.html#lsst-ts-salobj-sal-scripts>`_ are a series of coordinated sequences, often consisting of commands to CSCs, that are executed by the `ScriptQueue <https://ts-scriptqueue.lsst.io/>`_.
+The LOVE system contains a graphical ScriptQueue interface to control and monitor the execution of scripts.
 It is anticipated that most standard operations will utilize scripts.
 Also possible, although not standard practice, is to manually execute a script from the `Nublado (Jupyter Notebook) Interface`_.
 From within a SAL script, users can send standard commands to components as well as send data to the `OCPS`_ for processing.
 The script can then either wait for the analysis to complete and continue, with the ability to act based on the result, or launch the process (e.g. image reduction) and continue executing the script.
 Scripts are not intended to perform any data analysis and do not produce artifacts.
 They can not display any figures nor report customized results (only status).
-The monitoring and execution of a SAL Scripts progress is done via the LOVE ScriptQueue GUI.
 
 
 OCPS
 ''''
-The `Observatory Controlled Pipeline Service (OCPS) <https://dmtn-133.lsst.io/>`_ is a CSC which allows observers (and SAL Scripts) to execute pipeTasks to perform data reductions and analyses.
+The `Observatory Controlled Pipeline Service (OCPS) <https://dmtn-133.lsst.io/>`_ is a CSC that allows observers (and SAL Scripts) to execute pipeTasks to perform data reductions and analyses.
 The CSC runs on the summit but the data processing is currently running at the base on the commissioning cluster (although it may be relocated to the summit).
 The OCPS is not a display tool, but can be used to produce artifacts (such as images, spectra etc) that observers want to display.
 The current scope of this service is to only provide image-related processing.
@@ -268,12 +268,12 @@ At this time, the OCPS is being used to perform the analysis of daily calibratio
 
 Prompt Processing
 '''''''''''''''''
-The Prompt Processing Pipeline is expected to run at the United State Data Facility (USDF).
+The Prompt Processing Pipeline is expected to run at the United States Data Facility (USDF).
 Within 60s, the images taken on-sky get reduced and a series of data products are made available.
-A small number of these data products are sent back to the summit via the  `via the Telemetry Gateway <https://docushare.lsst.org/docushare/dsweb/Get/LSE-72#%5B%7B%22num%22%3A54%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C69%2C205%2C0%5D>`_.
+A small number of these data products are sent back to the summit `via the Telemetry Gateway <ls.st/lse-72>`_.
 This service is not yet in place.
 
-It is expected that metrics coming from prompt processing (and `faro`_) will be used in on-the-fly displays.
+It is expected that metrics coming from Prompt Processing (and `faro`_) will be used in on-the-fly displays.
 
 faro
 ''''
@@ -307,8 +307,8 @@ The use of these clusters remains unclear and is called out in the `Other Findin
 
 .. _Deliverable 4:
 
-Deliverable 4:
---------------
+Deliverable 4: Augmenting Current and Adding New Functionalities
+----------------------------------------------------------------
 
 .. note:: 
 
@@ -320,7 +320,7 @@ Deliverable 4:
       - Deliver a proposed implementation for each use-case
 
 Each of the use-cases presented in `Deliverable 1`_ contain a heading regarding a suggested implementation.
-Thoe contents of each section refer to new and/or augmented functionality that is seen accross many of them.
+The contents of each section refer to new and/or augmented functionality that is seen accross many of them.
 Because the explicit identification of new functionality would add unnecessary noise and confusion for the reader, the content is accumulated here and explained in greater detail.
 
 The items for this deliverable have been separated into two areas:
@@ -344,24 +344,24 @@ In most cases, specifically in regards to image display, augmenting functionalit
 The list of new functionalities required for already existing tools include:
 
 #. Numerous `Camera Visualization Improvements <pg-D2-Requirements_for_image_display>`_ were described as part of `Deliverable 2`_ and are therefore not repeated here.
-   An `example of the callback functionality <demo_callback>`_ in the `Proof-of-concept Demonstrations`_ section.
+   An example is the `callback functionality <demo_callback>`_ in the `Proof-of-concept Demonstrations`_ section.
 #. The OCPS (really the butler) requires access to EFD. This is not currently captured in a use-case but one can envision how having a pipeTask be capable to correlate image quality against items in the EFD could be useful.
 
    - No code has been written to integrate butler directly with EFD, but it is possible to do
-   - Would enable useres to define pipelines that explicitly specified EFD datasets as pipeline inputs. 
-     Currently, it would be required to sort out the mapping of Exposure dataId to and EFD call in (potentially) a special runQuantum method in the pipeline task
+   - Would enable users to define pipelines that explicitly specify EFD datasets as pipeline inputs. 
+     Currently, it would be required to sort out the mapping of exposure dataId to an EFD call in (potentially) a special runQuantum method in the pipeline task
   
 
 Entirely New Functionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section identifies functionalities that are required and could not be assertained by upgrading already existing components.
-The largest piece of missing functionalty is the framework to perform on-the-fly analyses which are triggered on specific events or conditions, then able to perform calculations, generate a report (including plots etc), and have the operator be alerted.
+This section identifies functionalities that are required and could not be ascertained by upgrading already existing components.
+The largest piece of missing functionalty is the framework to perform on-the-fly analyses which are triggered on specific events or conditions and then be able to perform calculations, generate a report (including plots etc), and have the operator be alerted.
 Implementing this type of capability requires numerous pieces to work together.
 
 
 Catcher CSC
-'''''''''''''
+'''''''''''
 
 A series of new functionality, which for the purposes of this document we have grouped into a single "Catcher" Controllable SAL Component (CSC) is required to handle the low-level coordiation of identifying when a specific condition is met, then launching and monitoring an analysis process.
 It is still being evaluated if it is required to generate a new CSC or if the Watcher CSC can be augmented to handle this new functionality. 
@@ -372,14 +372,20 @@ More details on the design and implementation can be found in the `Catcher Desig
 
 At the end of an analysis task, a "report" is generated and produced as a result.
 The reports from the Catcher can be derived in multiple ways and take on multiple formats.
-There is no requirement that the analysis aspects generated by the Catcher managed tasks be persistent but it is recommended.
+There is no requirement that the analysis results generated by the Catcher-managed tasks be persistent.
+However, it should be recommended practice as the results can be re-run at a later date.
 When possible, this committee recommends that analysis tasks produce reports in the form of `Papermill Executed Parameterized Notebooks`_.
 Once executed, the notebooks and their contents and archived to the LFA, where they can be looked at (and even re-run) either immediately or at a later date.
 The capabilities of the notebooks is vast; allowing image analysis via sending commands to the OCPS, queries of the EFD, grabbing of SAL events or data from the Butler.
-The data to create any plots or other displays are also contained in the notebook allowing plots to be modified and re-generated as required.
+The queries to obtain the data to create any plots or other displays are also contained in the notebook.
+This allows plots to be modified and re-generated as required at a later date.
 Lastly, the notebooks can be used to create a dataset that can be displayed by a Bokeh Application that is nested inside a LOVE display, which is one of the key use-cases that will be encountered during observations.
 There are details that remain to be solved, specifically aspects such as how to account for multiple reports that can be generated by re-running the same notebook multiple times.
 These are presumed to be solvable problems but will require further investigation that goes beyond the scope of this group.
+
+It is worth mentioning that having analysis results persisted in the Butler is not a viable option in many cases.
+The Butler requires an artifact to be associated with a dataId.
+For many analyses, there will be no image associated with it, and therefore the Butler cannot be used.
 
 
 Bokeh Plotting Applications
@@ -400,7 +406,7 @@ The apps can then create dynamic (or static) plots, display images, or even be s
 One major advantage of Bokeh is that the very high majority of the application can be developed inside a notebook.
 Once functioning as expected, it can be ported to a python file with minimal intervention required.
 
-As part of the selection criteria, demonstator projects were created and executed to verify certain aspects of the required functionality and usability.
+As part of the selection criteria, demonstation projects were created and executed to verify certain aspects of the required functionality and usability.
 Examples of Bokeh apps and their use is found in the `Proof-of-concept Demonstrations`_ section. 
 It was possible to build out and deploy the Jitter application in a few hours.
 The centering application, which can be used for determining offsets, took roughly two hours. 
@@ -425,7 +431,7 @@ The process consists of:
 
 More details on how to parameterize a notebook on a particular environment can be found in the `papermill usage documentation page <https://papermill.readthedocs.io/en/latest/usage-parameterize.html>`__.
 
-Notebooks can then be executed using `Papermill`_ command line interface or throught its Python API.
+Notebooks can then be executed using `Papermill`_ command line interface or through its Python API.
 
 Benefits of using `Papermill`_ includes:
 
@@ -451,7 +457,7 @@ Some challenges with using Jupyter Notebooks and Papermill are:
 
   - Overhead on loading the environment.
 
-    When executing a notebook throught `Papermill`_, there is an overhead associated with loading the environment prior to the execution by the Jupyter lab server.
+    When executing a notebook through `Papermill`_, there is an overhead associated with loading the environment prior to the execution by the Jupyter lab server.
     The size of the overhead depends on the environment which the notebook is running.
     
     For reference, in the ScriptQueue environment the overhead is about 2s.
@@ -467,8 +473,8 @@ Some challenges with using Jupyter Notebooks and Papermill are:
 
 .. _Deliverable 5:
 
-Deliverable 5:
---------------
+Deliverable 5: Prioritized Task List and Delivery Milestones
+------------------------------------------------------------
 
 .. note:: 
 
@@ -478,8 +484,11 @@ Deliverable 5:
        - These dates shall correspond to integration milestones.
 
 
-This will be a prioritized list of which functionalities should be implemented in which order.
-Note that the requirements are already prioritized to a degree and will help inform this.
+This section is not yet completed.
+In the final version, a prioritized list of required functionalities will be presented.
+Note that the requirements are already prioritized to a degree and will help develop this list.
+
+The development of the Catcher is the highest priority item as it is required to develop the on-the-fly analysis framework and will take time to produce.
 
 
 .. _Other Findings and Identified Issues:
@@ -527,7 +536,7 @@ Of course, these studies will involve looking at images that date back in time, 
 This could be useful even for summit operations if it allows display of historic images (for comparison with new images).
 The historical data on the summit is currently limited to 30 days.
 
-**Priority: 1**
+.. **Priority: 1**
 
 **Current shortcomings:** Firefly may not meet all of the requirements for all image visualization, specifically in regards to full-frame visualization.
 Deployment not nested into current `RSP`_ deployment strategy.
@@ -548,8 +557,7 @@ FAFF-REQ-026
 **Rationale:** Displaying images with full DM ISR applied, co-added images etc.
 This is required to perform much of the post on-the-fly analysis during commissioning.
 
-
-**Priority:** 1
+.. **Priority:** 1
 
 **Current shortcomings:** DM has an abstract image visualization interface (afw). 
 Needs to be evaluated to see if this could be used to meet all the requirements.
@@ -565,7 +573,7 @@ FAFF-REQ-036
 
 **Rationale:** Used to indicate which sources are used in PSF analysis, blends, from catalogs etc.
 
-**Priority:** 1
+.. **Priority:** 1
 
 **Current shortcomings:** Currently unable to interface to DM (essentially the butler, pre-req is FAFF-REQ-026_) 
 
@@ -579,11 +587,11 @@ FAFF-REQ-017
 
 **Specification:** Ability to choose between minimal ISR versus some more sophisticated ISR (for example, the calexp images served from a butler)
 
-**Rationale:** 
+**Rationale:** For general SV purposes, it should be possible to inspect images at various stages of data processing both to evaluate the ISR performance and to visualize more generic representations of pixel-level information (e.g., mask planes).
 
-**Priority:**
+.. **Priority:**
 
-**Current shortcomings:** Currently unable to interface to DM (butler) 
+**Current shortcomings:** Currently unable to interface to DM (essentially the butler, pre-req is FAFF-REQ-026_)  
 
 **Applicable Use-cases:**
 
@@ -598,13 +606,13 @@ The examples in the following subsections were proven using data from the summit
 
 .. note::
    Due to the recent power losses at the summit and the loss of the andes cluster, there has been no new data in the last 30-days and therefore they are not presently able to show data.
-   As a result, the documentation each demonstrator is sparse.
+   As a result, the documentation each demonstration is sparse.
    Further screenshots and evidence of their functionality will be provided once data is back on the summit.
 
 
 .. _demo_jitter:
 
-Creation and display of the Jitter Plots in Bokeh
+Creation and Display of the Jitter Plots in Bokeh
 -------------------------------------------------
 
 Following the plot example in the `Jitter Use-Case <Mount Jitter Measurement and Reporting>`_, a Bokeh app was created where all 9-plots were shown simultaneously and the user could actively drag and zoom on the plots to adjust the ranges of the axes. 
