@@ -56,22 +56,50 @@
    The First-Look Analysis and Feedback Functionality Breakout Group `charge`_ details questions regarding how the Rubin Project will perform on-the-fly analysis and display of both local data reduction artifacts and camera images. This document details the answers to the charge questions and other findings.
 
 
+Executive Summary
+=================
+
+This is the initial report by the FAFF working group and contains all of the findings and recommendations that will be provided in the final copy.
+Due to the current summit power issues, aspects of the document could not be completed at this time, specifically the documentation of the proof-of-concept demonstrators due to the loss of the Andes cluster and current void of data at the summit.
+
+The working group accumulated a series of use-cases that represent the functionality required to successfully perform on-sky and on-the-fly operations during the commissioning phase.
+By analyzing the use-cases and exploring how they would be accomplished using our current toolset, it has been determined that a large fraction of the necessary capabilities are already scoped and implementend but require augmenting certain functionalities to enable proper interfacing and inter-operability.
+However, there exist a important gaps that require new software, selection of adopted packages, and the development of examples such that users can use the components effectively. 
+This is especially apparent with regards to on-the-fly analysis tasks and ability to support the diversity of figures that will be required for monitoring, system characterization and even global system debugging.
+A new CSC will need to be developed to handle the creation and management of analysis tasks as well as the alerting of newly created artifacts to users.
+A design and scope estimate for this CSC has been developed and all the information is ready to support the filing of an LCR if required.
+Dynamic figures that are to be embedded into the LOVE system will be required to use the Bokeh package to create an application, which will then be deployed using Kubernetes.
+
+The display of images for on-the-fly analysis is most easily accomplished using the Camera Visualization Tool.
+With moderate effort, the functionalities of this tool can be expanded to to meet the requirements for on-the-fly applications.
+
+The working group has performed several proof-of-concept demonstrators to test and back our recommendations and findings.
+Critical to the success of using these tools in an integrated way will be the creation of a series of instructional documentation to guide users on how to design, communicate, build, and deploy their desired tools.
+The creation of these instructive documents is beyond the scope of this working group, but all members are keen to assist in developing this documentation.
+
+Lastly, this working group has accumulated numerous findings and has made recommendations that are critical to the success of commissioning, but technically outside the scope of the on-the-fly displays and analysis, as per the charge.
+These findings should be strongly considered by Project Management as they are expected to result in simplifying some of the global display challenges, specifically during data analysis.
+
+
 Introduction
 ============
 
-The First-Look Analysis and Feedback Functionality (FAFF) Breakout Group met approximately weekly starting FIXME1 and released it's first report on FIXME2.
+The First-Look Analysis and Feedback Functionality (FAFF) Breakout Group met approximately weekly starting June 30, 2021 and released it's first report on January 14, 2022.
 The report consists of the use-cases that were used to define the functionality, requirements put on by those use-cases, and recommendations for new functionality.
 It should be noted that demonstrators of some of the new functionality were performed, which lengthened the response process, but also resulted in the building of a proof-of-concept tool which enhances the viability of the recommendations.
 
 Some of the responses to the `charge`_ of the FAFF group were built off an Image Display Working Group who reported what was required by the data management group for image display and manipulation capabilities in `DMTN-126`_.
 That group was not focused on on-the-fly functionality but many of the findings were applicable and taken into account here when it made sense to do so.
 
+This report is structured into sections, where the first addresses each of the charge questions individually.
+This is followed by a section on findings that are pertinent to the commissioning team but fall outside the scope of the charge, and subsequently a section outlining the proof-of-concept demonstrators that helped inform our recommendations.
 
 
 Responses to Charge Questions and Deliverables
 ==============================================
 
-The use-cases are all found on the :ref:`pg-D1-Use-cases` page.
+The use-cases referenced throughout the document are all found on the :ref:`pg-D1-Use-cases` page.
+In each of the subsections
 
 .. _Deliverable 1:
 
@@ -142,10 +170,11 @@ Currently Available Tools
 The following tools are released for general use and are expected to be used in the context of on-the-fly information gathering and display.
 Some remain under active development whereas others are considered nearly complete.
 
-LOVE
-''''
+.. _LOVE:
 
-.. tiago writing this
+LSST Observatory Visualization Environement (LOVE)
+''''''''''''''''''''''''''''''''''''''''''''''''''
+
 LOVE is a web-based user inteface for the observatory control system. 
 It is currently available at the `summit <http://amor01.cp.lsst.org/>` (VPN required) and all other test stands.
 
@@ -160,7 +189,6 @@ This could be used, for instance, to embed `Bokeh Plotting Applications`_ alongs
 Nublado (Jupyter Notebook) Interface
 ''''''''''''''''''''''''''''''''''''
 
-.. patrick writing this
 The summit `Nublado interface <https://summit-lsp.lsst.codes/>`_ (VPN required) provides the user with a Jupyter Lab interface and the required libraries/packages to perform standard observatory operations including sending commands and running SAL scripts.
 It can also be used to query the EFD.
 This tool is setup to mimick the `RSP`_ and test-stand environments to the maximum extent possible, providing all the functionalities of a Jupyter Notebook but with direct access to the control system.
@@ -170,12 +198,16 @@ They are also useful for on-the-fly analysis and/or custom monitoring.
 
 Camera Visualization Tool
 ''''''''''''''''''''''''''
+The camera image visualization tool is designed to run on the camera diagnostic cluster and to deliver full-resolution focal plane images to the operator within a few seconds of image acquisition. 
+The front-end is web based and supports natural zooming and panning, including zooming to full pixel resolution, as well as the ability to display pixel coordinates and raw pixel value by moving the mouse over the image. 
+It supports a simple but extensible set of image processing algorithms which have been found to be useful for viewing images during camera testing.
 
-.. tony writing this
+The tool uses the `International Image Interchange Framework <https://iiif.io/>`_ (IIIF) with the front-end based on the open source `OpenSeadragon <https://openseadragon.github.io/>`_ framework, and the backend based on the open source `Cantaloupe <https://cantaloupe-project.github.io/>`_ product, modified to be able to read images from  FITS files and directly from the DAQ.
+The tool is currently deployed at SLAC for camera construction, and on the summit in Chile for Auxtel and ComCam.
+
 
 Engineering Facilities Database and Large File Annex
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
-.. Patrick writing this
 
 The `Engineering Facilities Database (EFD) <https://sqr-034.lsst.io/#introduction>`_ records all commands, events, and telemetry sent over the DDS control network.
 This content essentially tracks the observatory state as a function of time and is very useful in diagnosing issues and understanding (both desired and undesired) operational behaviours.
@@ -202,8 +234,6 @@ For this reason (and many others), it's not an appropriate substitute for a true
 Watcher
 '''''''
 
-.. Patrick writing this
-
 The `Watcher CSC <https://ts-watcher.lsst.io/>`_ monitors control components listening for data that signals an alarm to the observer.
 The alarms are defined by a series of "rules" which are defined and added to the package.
 The CSC itself is not a display tool nor does it have any display functionality.
@@ -214,8 +244,6 @@ There is no feedback or interaction for the observer beyond the acknowledgment t
 
 SAL Scripts
 '''''''''''
-
-.. Patrick writing this
 
 `SAL scripts <https://ts-salobj.lsst.io/sal_scripts.html#lsst-ts-salobj-sal-scripts>`_ are a series of coordinated sequences, often consisting of commands to CSCs, that are executed by the `ScriptQueue <https://ts-scriptqueue.lsst.io/>`_.
 It is anticipated that most standard operations will utilize scripts.
@@ -228,7 +256,7 @@ The monitoring and execution of a SAL Scripts progress is done via the LOVE Scri
 
 
 OCPS
-'''''''
+''''
 The `Observatory Controlled Pipeline Service (OCPS) <https://dmtn-133.lsst.io/>`_ is a CSC which allows observers (and SAL Scripts) to execute pipeTasks to perform data reductions and analyses.
 The CSC runs on the summit but the data processing is currently running at the base on the commissioning cluster (although it may be relocated to the summit).
 The OCPS is not a display tool, but can be used to produce artifacts (such as images, spectra etc) that observers want to display.
@@ -247,13 +275,9 @@ This service is not yet in place.
 
 It is expected that metrics coming from prompt processing (and `faro`_) will be used in on-the-fly displays.
 
-.. Patrick writing this
-
 faro
-'''''''
-
-.. Keith writing this
-
+''''
+..
    Link to github repo:
    https://github.com/lsst/faro
 
@@ -270,7 +294,7 @@ faro is NOT itself a visualization tool, but rather generates scalar metric valu
 Available Computing Power
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. Robert writing this
+.. TODO: Robert needs to write this
 
 The following computing resources are available for use but how the hardware will be utilized is not yet well planned and/or documented.
 
@@ -387,8 +411,6 @@ Should they wish to be used at the Rubin Science Platform (`RSP`_) for instance,
 
 Papermill Executed Parameterized Notebooks
 '''''''''''''''''''''''''''''''''''''''''''
-
-.. tiago will write this
 
 `Papermill`_ introduces the concept of *parameterized notebooks* and provides tools to execute them in a batch-like mode.
 
@@ -573,8 +595,11 @@ Proof-of-concept Demonstrations
 
 To confirm the recommendations of this committee, several examples were created to provide a proof-of-concept and help identify details regarding implementation.
 The examples in the following subsections were proven using data from the summit from previous AuxTel runs.
-However, due to the recent power losses at the summit, there has been no new data in the last 30-days and therefore they are not presently able to show data.
-This will be remedied once data starts flowing again and further screenshots and evidence of their functionality will be provided.
+
+.. note::
+   Due to the recent power losses at the summit and the loss of the andes cluster, there has been no new data in the last 30-days and therefore they are not presently able to show data.
+   As a result, the documentation each demonstrator is sparse.
+   Further screenshots and evidence of their functionality will be provided once data is back on the summit.
 
 
 .. _demo_jitter:
@@ -582,40 +607,64 @@ This will be remedied once data starts flowing again and further screenshots and
 Creation and display of the Jitter Plots in Bokeh
 -------------------------------------------------
 
-- Link to jitter app
-- Also link to code where it is hosted
-- Add paragraph about deployment of the App.
+Following the plot example in the `Jitter Use-Case <Mount Jitter Measurement and Reporting>`_, a Bokeh app was created where all 9-plots were shown simultaneously and the user could actively drag and zoom on the plots to adjust the ranges of the axes. 
+Users are able to select an obsID, then the app would query the EFD and create the plot in real-time. 
+The app was then manually deployed to Andes and embedded in a custom LOVE display window.
+Each user navitaging to the window was presented with the same original plot, however the user-experience was specific to that user (meaning if one person adjusts the ranges only they see the change).
+
+Deploying the app via Kubernetes was identified as feasible and the preferred method for deployement, however it has not yet been performed.
 
 .. _demo_offset:
 
-Creation of offset measurements in Bokeh
-----------------------------------------
+Calculation of Offset Measurements in Bokeh
+-------------------------------------------
 
-- Show screenshots and link to example code for application
-- Also include (in the text) that it's possible to put in telescope commands in the GUI
+One regularly occuring use-case was regarding how we will determine and ultimately apply telescope offsets.
+Although this is not expected to be a regular survey operation, it is a very standard operation carried out in most observatories and serves to represent functionalities that will be required regarding interaction between image display and the control system.
+
+To demonstrate the ability for Bokeh to provide information from images a demonstrator application was built in Bokeh that loads a single detector image that has been injested by the Butler.
+The image to be loaded is designated in the URL to the application, and therefore is one way that the Bokeh Apps can interact with the Camera Visualization Tool.
+Although not performed, the Camera Visualiation Tool is supports callbacks.
+One easy way to interact with deployed Bokey apps is to send the information (such as obsID and detector determined via a cursor position and/or a pressed key) via a URL. 
+Once in the Bokeh App, the user can then zoom and scroll on the image to find their desired target and select (click) it.
+The app then uses that user-defined position and performs a rapid centroiding to determine and return the center of the designated target.
+
+Developing a REST API to support interactions (callbacks) between the Camera Visualization Tool and Bokeh Apps is feasible, but is ultimately more work to demonstrate then sending the callback information via URLs. 
+Whether or not it is worth implementing this is dependent upon use-case(s) but we predict it is worthwhile, especially if the Camera Visualization Tool is to be used in places other than the summit (see `Camera Visualization Tool Functionality Limitations for General Commissioning`_).
+
+Of course, the finding/centroiding capability could be built into the Camera Visualization tool.
+However, rapidly adding functionality to the Camera Visualization Tool then redeploying carries far more risk and has a broader impact than a Bokeh App.
+Currently, the camera tool does not have access to the WCS data to calculate offsets, however, this will be available soon.
+Commanding the telescope from the Camera Visualization Tool would be a very significant augmentation of functionality.
+
+Although not performed, it is then possible (if desired) to have a button/drop-down that sends commands to the TCS.
+For example, it could center the target, or put the target on a specific pixel, without having to leave the App.
+
+Readers may be curious if a Bokeh App can display a full LSST image.
+This was tested and shown to be possible, however, it takes several minutes to render and is therefore not advised.
 
 
-.. _demo_callback:
-Offsetting example using Camera Visualiation Tool Callback
-----------------------------------------------------------
+.. 
 
-This is currently an action item of a example of what can be done when requirement :ref:`FAFF-REQ-025` is implemented and will be populated once completed.
+   .. _demo_callback:
+   Offsetting example using Camera Visualiation Tool Callback
+   ----------------------------------------------------------
+
+   This is currently an action item of a example of what can be done when requirement :ref:`FAFF-REQ-025` is implemented and will be populated once completed.
 
 
 
-TO DO BEFORE FINAL REPORT SUBMISSION
-====================================
+Remaining Work by the Working Group
+===================================
 
-.. important::
-
-   Remove this section before submitting
-
-- Remove FIXME and TBRs
+- Answer `Deliverable 5`_ with a more explicit list.
+- Populate the `Proof-of-concept Demonstrations`_ section with screenshots and examples.
+- Populate (4) outstanding TBRs in `Deliverable 2`_.
 - Move confluence content into this technote where appropriate. 
   Prints of PDFs may be sufficient.
 - `Bokeh Plotting Applications`_ section requires more detailed notes on how to go from functionality developed in a notebook, to an app, and then how to get that embedded in LOVE.
 - Create repo for building apps with template(s)
-- Work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer. 
+- Create a sample work flow which includes an "easy" example of how to derive/calculate a property, then create+deploy and App, then send an alert to an observer. 
   This may be too much scope and depends upon when the Catcher demonstrator can be implemented.
 
 .. .. rubric:: References
