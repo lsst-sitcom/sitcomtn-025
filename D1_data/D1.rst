@@ -1,0 +1,80 @@
+.. _pg-D1-Use-cases:
+
+########################
+Deliverable 1: Use-cases
+########################
+
+This page describes the standardized use-cases that were used in defining requirements and responding to the other charge questions.
+They will be referred (and linked) to throughout this report.
+The use-cases are separated into two categories.
+The first set describes the use-cases that exemplify functionalities required to perform on-the-fly analyses and alert users.
+The second set is specific to image display capabilities.
+
+.. _pgD1 Use-cases for On-the-fly Analysis and Reporting:
+
+Use-cases for On-the-fly Analysis and Reporting
+===============================================
+
+The use-cases for on-the-fly reporting are reported in the following subsections.
+They are designed to be as orthogonal as possible but overlap does exist.
+Increased detail is given where a unique requirement is going to result from the use-case.
+General capabilities and existing functionality is given significantly less attention.
+
+
+.. _pgD1 Mount Jitter Measurement and Reporting:
+
+Mount Jitter Measurement and Reporting
+--------------------------------------
+
+The Mount Jitter use-case demonstrates the calculation of mount data during an exposure and the production of a PSF for a quick data quality assessment if certain conditions are met (e.g. the mount shows an unacceptable amount of motion).
+Depending upon those results, a special display is updated and the observer gets alerted such that they can evaluate the issue and possibly change observing strategies.
+For the moment, the `Jitter use-case is hosted on confluence <https://confluence.lsstcorp.org/pages/viewpage.action?spaceKey=LSSTCOM&title=Mount+Jitter+Use-Case>`_.
+
+
+
+Afternoon Calibration Generation
+--------------------------------
+
+Calibrations are meant to be run every afternoon via the scriptQueue.
+The primary items addresed by this use-case are usage of the OCPS but also includes aspects captured in the section regarding `Use-cases for Image Display Capabilities`_
+For the moment, the `Afternoon Calibration Generation use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Use+Cases+for+Calibration+Generation>`_.
+
+.. _pgD1 Automated Fault Report Use-Case:
+
+Automated Fault Report Use-Case
+--------------------------------
+
+This use-case is to emphasize that there will be a demand for running analyses and generating artifacts that are not associated with images.
+It also emphasizes the need to generate reports in a way that they can be easily linked/distributed.
+For the moment, the `Automated Fault Report Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/display/LSSTCOM/Automated+Fault+Report+Use-Case>`_.
+
+
+Active Optics System (AOS)
+--------------------------
+
+The AOS use-case captures many of the types of plots/figures that will need to be presented.
+It also captures some key functionalities that are required by the image display system.
+Much of this use-case was based on use-cases from the DECam Active Optics System.
+For the moment, the `Active Optics System Use-Case use-case is hosted on confluence <https://confluence.lsstcorp.org/pages/viewpage.action?pageId=156512863>`_.
+
+
+
+Observer Data Summary Feedback
+------------------------------
+
+Significant input was provided regarding the display of feedback to the observer, many of which were from the Scheduler.
+This was intentionally left for a later date and any specific architectural requirements that came out of this have been incorporated into the other use-cases.
+It appears that by implementing the on-the-fly analysis recommendations and using these results as part of a Bokeh app then all of the items in these use-cases can be implemented.
+
+
+Use-cases for Image Display Capabilities
+========================================
+
+A formalized use-case was not developed in the same way as the others for Image Display Capability.
+However, repeatedly used examples for discussion and requirement generation are as follows:
+
+#. Displays used to stretch/scale to find a target, then calculating and applying an offset.
+   This includes rotating the image to have north up, applying coordinate overlays, measuring distances etc.
+#. The viewing of calibration frames to look at flats etc.
+#. The viewing of on-sky images and adjusting as required to view low-surface brightness objects.
+   This includes applying neccesary filters, stretches etc.
