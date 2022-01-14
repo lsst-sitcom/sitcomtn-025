@@ -308,17 +308,16 @@ Available Computing Power
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The following computing resources are available for use but how the hardware will be utilized is not yet well planned and/or documented.
+This is called out in the `Other Findings and Identified Issues`_ section, under the :ref:`Diagnostic_and_Commissioning_Cluster` heading.
 
 On Cerro Pachón:
 
 - Yagan - the summit-based cluster hosting nearly all services (Nublado, CSCs, EFD etc)
-
  - 7 nodes
  - 64 cores/node (448 total), 4 GB RAM/core (256 GB RAM/node)
  - 168TB storage (5.4TB local disk per node)
 
 - LSSTCam Diagnostic Cluster
-  
  - 10 nodes
  - 32 cores/node (320 total), 4 GB RAM/core (128 GB RAM/node)
  - 10 TB/node (100 TB total)
@@ -326,14 +325,11 @@ On Cerro Pachón:
 
 In La Serena:
 - The Commissioning Cluster ("Antu")
-  
  - 15 Heterogeneous nodes
  - 24-72 cores/node (832 total)
  - 3.2T RAM total (average 3.9 GB/core)
  - 26 TB storage
  - Expect 1.6 PB (c. 800 TB formatted) in April 2022.  The usable ratio will improve as we add more disk.
-
-The use of these clusters remains unclear and is called out in the `Other Findings and Identified Issues`_ section, under the :ref:`Diagnostic_and_Commissioning_Cluster` heading.
 
 
 .. _Deliverable 4:
