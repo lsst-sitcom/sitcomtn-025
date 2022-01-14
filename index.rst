@@ -227,21 +227,30 @@ Chronograf is a tool that provides a user-friendly graphical interface to each `
 During operations, observers will use the `summit instance <https://chronograf-summit-efd.lsst.codes/>`_ (VPN required).
 It is particularly useful for quick and simple analysis as well as for creating dashboards to show a specific information about the status of the observatory; especially when a similar functionality is not available in LOVE.
 
-It is not well suited for complex queries or figures and previous queries/plots are not easily replicated.
-Furthermore, it always displays the last event seen.
-Therefore if a Controllable SAL Component (CSC) crashes, it will always show the last published state.
-For this reason (and many others), it's not an appropriate substitute for a true status GUI, such as what is being provided by the `LOVE`_ interface.
+Chronograf is not particularly well suited for complex queries and figures, especially those that require some additional logic to be meaningful.
+For example, if a Controllable SAL Component (CSC) crashes, a view displaying its summary state will continue to show the last value in the EFD, which is likely no longer applicable.
+To derive relevant information, it is necessary to combine it with some additional data, such as the time since the last published heartbeat.
+This is not easily accomplished in Chronograf as it is not designed for this purpose.
+Furthermore, Chronograf views (queries, plots, dashboards, etc) are not easily replicated, and can vary significantly for different users, depending on their local configurations.
+For these reason (and many others), it is not an appropriate substitute for a true monitoring system, such as what is provided by the LOVE_ interface.
 
 Watcher
 '''''''
 
 The `Watcher CSC <https://ts-watcher.lsst.io/>`_ monitors control components listening for data that signals an alarm to the observer.
-The alarms are defined by a series of "rules" that are defined and added to the package.
-The CSC itself is not a display tool nor does it have any display functionality.
-When condition defined by an rule is met, an alarm is generated and the observer is alerted via a LOVE screen.
+The Watcher CSC <https://ts-watcher.lsst.io/>_ monitors data from multiple sources and publishes alarm events to DDS depending on predefined conditions.
+Although it is currently fed mainly with DDS data published by CSCs, it does has the capability to listen to other external data streams.
+Alarms are composed by a set of "rules" that are defined and added to the application software package.
+Most alarms are generic enough such that they can be configured to act for multiple CSCs, whereas others are specific to a particular component.
+For example, the heartbeat rule can be configured for any CSC, and will issue an alarm if it does not receive a heartbeat for less than a configurable time (usually 5s, which is the default).
+
+The Watcher itself is not a display tool nor does it have any display functionality.
+When a condition defined by an rule is met, an alarm is generated and the observer is alerted via a LOVE screen.
 The alarm has a series of levels and audible alerts are sent out via LOVE, as well as a visual notification.
 Once the alarm is acknowledged by the observer the alert is considered to be completed.
 There is no feedback or interaction for the observer beyond the acknowledgment of the alarm.
+Alarms will only deactivate (stop re-occuring) if the condition for which they are activated cease to exist, e.g., if a CSC resumes publishing heartbeats after being restored.
+
 
 SAL Scripts
 '''''''''''
@@ -252,8 +261,8 @@ It is anticipated that most standard operations will utilize scripts.
 Also possible, although not standard practice, is to manually execute a script from the `Nublado (Jupyter Notebook) Interface`_.
 From within a SAL script, users can send standard commands to components as well as send data to the `OCPS`_ for processing.
 The script can then either wait for the analysis to complete and continue, with the ability to act based on the result, or launch the process (e.g. image reduction) and continue executing the script.
-Scripts are not intended to perform any data analysis and do not produce artifacts.
-They can not display any figures nor report customized results (only status).
+Scripts are not intended to perform intensive data analysis and, in general, are not expected to produce artifacts.
+Scripts are also unable to display visualizations.
 
 
 OCPS
