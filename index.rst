@@ -42,16 +42,11 @@
 
 .. sectnum::
 
-.. TODO: Delete the note below before merging new content to the main branch.
-
-
 .. _charge: https://sitcomtn-013.lsst.io/
 .. _DMTN-126: https://DMTN-126.lsst.io/
 .. _RSP: https://nb.lsst.io/
 
 .. note::
-
-   **This technote is not yet published.**
 
    The First-Look Analysis and Feedback Functionality Breakout Group `charge`_ details questions regarding how the Rubin Project will perform on-the-fly analysis and display of both local data reduction artifacts and camera images. This document details the answers to the charge questions and other findings.
 
@@ -122,7 +117,7 @@ Many of the examples from the community had significant overlap of information.
 To amalgamate the information and create a basis from which to work, a series of standardized use-cases were developed that followed a common format and layout.
 A standardized summary was also created to ease comparisons between use-cases.
 
-The standardized use-cases associated with this deliverable are found at :ref:`pg-D1-Use-cases` page.
+The standardized use-cases associated with this deliverable are found on a separate :ref:`pg-D1-Use-cases` page.
 
 .. _Deliverable 2:
 
@@ -140,7 +135,7 @@ Deliverable 2: Requirements
 Like the use-cases, the requirement deliverables have been separated into two different categories: those which are focused on tooling and procedures for on-the-fly analysis, and image visualization.
 The two categories are quite separate in nature but not completely independent.
 
-The detailed list of requirements is found on :ref:`pg-D2-Requirements`.
+The detailed list of requirements is found on a separate :ref:`pg-D2-Requirements` page.
 
 
 .. _Deliverable 3:
@@ -301,6 +296,14 @@ faro is designed to be modular and configurable so that additional metrics can b
 faro is NOT itself a visualization tool, but rather generates scalar metric values that could be used as input to visualization tools.
 
 
+RubinTV
+'''''''
+
+The `Rubin TV image display service <https://roundtable.lsst.codes/rubintv>`_ is a collection of auto-generated webpages that displays the output (PNGs) of a series of manually deployed analysis scripts.
+It was relatively straightfoward to implement and has proved a useful tool during early AuxTel Commissioning.
+We expect it to continue to be useful as the framework recommended in this report is developed.
+It is not expected to be a long-term solution to the Rubin Visualization challenges as it does not fulfil a sufficient number of the necessary requirements.
+
 Available Computing Power
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -401,7 +404,7 @@ For many analyses, there will be no image associated with it, and therefore the 
 Bokeh Plotting Applications
 ''''''''''''''''''''''''''''
 
-Multiple plotting packages were considered before ultimately settling on Bokeh.
+Multiple plotting packages were considered before ultimately settling on the `Bokeh Visualization Library <https://bokeh.org/>`_.
 The majority of Python users are familiar with matplotlib and therefore finding a system to support this was the preferred option.
 However, matplotlib is very limited with regards to the creation of dynamic plots, for this reason the packages of vega-lite and Bokeh were considered.
 Both of these systems could be directly integrated into the LOVE framework with the currently existing functionality.
