@@ -300,9 +300,9 @@ RubinTV
 '''''''
 
 The `Rubin TV image display service <https://roundtable.lsst.codes/rubintv>`_ is a collection of auto-generated webpages that displays the output (PNGs) of a series of manually deployed analysis scripts.
-It was relatively straightfoward to implement and has proved a useful tool during early AuxTel Commissioning.
-We expect it to continue to be useful as the framework recommended in this report is developed.
-It is not expected to be a long-term solution to the Rubin Visualization challenges as it does not fulfil a sufficient number of the necessary requirements.
+It was relatively straightfoward to implement and has proved to be a highly useful tool during early AuxTel Commissioning.
+We expect it to continue to be useful as the framework recommended in this report is developed and the systems are matured.
+It is not expected to be one of the long-term solutions to the Rubin Visualization challenges because its capabilities will be incorporated into the other toolsets discussed in `Deliverable 4: Augmenting Current and Adding New Functionalities`_.
 
 Available Computing Power
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -310,11 +310,15 @@ Available Computing Power
 The following computing resources are available for use but how the hardware will be utilized is not yet well planned and/or documented.
 
 On Cerro Pachón:
-- Yagan
+
+- Yagan - the summit-based cluster hosting nearly all services (Nublado, CSCs, EFD etc)
+
  - 7 nodes
  - 64 cores/node (448 total), 4 GB RAM/core (256 GB RAM/node)
  - 168TB storage (5.4TB local disk per node)
+
 - LSSTCam Diagnostic Cluster
+  
  - 10 nodes
  - 32 cores/node (320 total), 4 GB RAM/core (128 GB RAM/node)
  - 10 TB/node (100 TB total)
@@ -322,6 +326,7 @@ On Cerro Pachón:
 
 In La Serena:
 - The Commissioning Cluster ("Antu")
+  
  - 15 Heterogeneous nodes
  - 24-72 cores/node (832 total)
  - 3.2T RAM total (average 3.9 GB/core)
