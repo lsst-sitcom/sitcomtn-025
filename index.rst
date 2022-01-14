@@ -63,17 +63,17 @@ This is the initial report by the FAFF working group and contains all of the fin
 Due to the current summit power issues, aspects of the document could not be completed at this time, specifically the documentation of the proof-of-concept demonstrators due to the loss of the Andes cluster and current void of data at the summit.
 
 The working group accumulated a series of use-cases that represent the functionality required to successfully perform on-sky and on-the-fly operations during the commissioning phase.
-By analyzing the use-cases and exploring how they would be accomplished using our current toolset, it has been determined that a large fraction of the necessary capabilities are already scoped and implementend but require augmenting certain functionalities to enable proper interfacing and inter-operability.
-However, there exist a important gaps that require new software, selection of adopted packages, and the development of examples such that users can use the components effectively. 
-This is especially apparent with regards to on-the-fly analysis tasks and ability to support the diversity of figures that will be required for monitoring, system characterization and even global system debugging.
+By analyzing the use-cases and exploring how they would be accomplished using our current toolset, it has been determined that a large fraction of the necessary capabilities are already scoped and/or implementend but require augmenting certain functionalities to enable proper interfacing and inter-operability.
+However, there exist critical gaps that require new software, designation of adopted packages or technologies, and the production of documentation such that users can interact with the system efffectively.
+
 A new CSC (Controllable SAL Component) will need to be developed to handle the creation and management of analysis tasks as well as the alerting of newly created artifacts to users.
 A design and scope estimate for this CSC has been developed and all the information is ready to support the filing of an LCR if required.
-Dynamic figures that are to be embedded into the LOVE system will be required to use the Bokeh package to create an application, which will then be deployed using Kubernetes.
-
+On-the-fly analysis tasks will produce reports that require a diversity of visualizations to facilitate monitoring, characterizing, and debugging the system.
+After exploring several options, it is recommended that dynamic figures that are to be embedded into the LOVE system should use the Bokeh Visualization Library to create an application which can then be deployed using Kubernetes.
 The display of images for on-the-fly analysis is most easily accomplished using the Camera Visualization Tool.
-With moderate effort, the functionalities of this tool can be expanded to to meet the requirements for on-the-fly applications.
+With moderate effort, the functionalities of this tool can be expanded to meet the requirements for on-the-fly applications.
 
-The working group has performed several proof-of-concept demonstrators to test and back our recommendations and findings.
+The working group has performed several proof-of-concept demonstrations to test and reinforce our recommendations and findings.
 Critical to the success of using these tools in an integrated way will be the creation of a series of instructional documentation to guide users on how to design, communicate, build, and deploy their desired tools.
 The creation of these instructive documents is beyond the scope of this working group, but all members are keen to assist in developing this documentation.
 
@@ -99,7 +99,6 @@ Responses to Charge Questions and Deliverables
 ==============================================
 
 The use-cases referenced throughout the document are all found on the :ref:`pg-D1-Use-cases` page.
-In each of the subsections
 
 .. _Deliverable 1:
 
@@ -108,13 +107,13 @@ Deliverable 1: Use-Cases
 
 .. note:: 
 
-   The deliverable description from the `charge`_ is in the note below to ease readability 
+   The deliverable description from the `charge`_ has been directly copied here to ease readability.
 
    1. A series of use-cases where feedback to observers is required. A reduced set of use-cases should be created as a regular reference during design and development.
 
       - Use-cases should be complete, including which inputs are required (e.g. SAL Script, EFD, LFA, external source), desired manipulations, logic-based operations/calculations, and how the desired artefacts are presented to the user (e.g. display images and/or graphs).
   
-A solicitation for use-cases was made to the Project stagg via the Commissioning meeting and a general call on the Slack channel.
+A solicitation for use-cases was made to the Project staff via the Commissioning meeting and a general call on the Slack channel.
 A meeting was held to define what the group was looking for and provided examples.
 Members were also encouraged to pass the call for information to whomever may be able to provide useful input.
 The responses from the community can be found `here <https://confluence.lsstcorp.org/display/LSSTCOM/2021-05-14+On-the-fly+analysis+for+observers+Meeting+Minutes#id-20210514OntheflyanalysisforobserversMeetingMinutes-On-the-flyAnalysisUse-Cases>`_.
@@ -132,13 +131,13 @@ Deliverable 2: Requirements
 
 .. note:: 
 
-   The deliverable description from the `charge`_ is in the note below to ease readability 
+   The deliverable description from the `charge`_ has been directly copied here to ease readability.
 
    2. A set of requirements to augment, clarify, or remove ambiguity that may occur from looking only at the use-cases.
       
       - This is not a formal and all-encompassing LSE-type requirements document.
 
-Like the use-cases, the requirement deliverables have been separated into two different categories, those which are focused on tooling and procedures for on-the-fly analysis and image visualization.
+Like the use-cases, the requirement deliverables have been separated into two different categories: those which are focused on tooling and procedures for on-the-fly analysis, and image visualization.
 The two categories are quite separate in nature but not completely independent.
 
 The detailed list of requirements is found on :ref:`pg-D2-Requirements`.
@@ -151,7 +150,7 @@ Deliverable 3: Currently Available Tools/Systems
 
 .. note:: 
 
-   The deliverable description from the `charge`_ is in the note below to ease readability 
+   The deliverable description from the `charge`_ has been directly copied here to ease readability.
 
    1. A summary of the suite of currently available tools/systems that may help fulfil the required functionality.
 
@@ -161,14 +160,14 @@ Deliverable 3: Currently Available Tools/Systems
 This section contains a summary of the tools currently available for use that are applicable to on-the-fly operations.
 What follows is a list of the tools, each with a short description that contain links to pertinent information.
 
-A high-level overview of these tools and computering resources was presented at the `original presentation given to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`_.
+A high-level overview of these tools and computing resources was presented at the `original presentation given to stakeholders <https://docs.google.com/presentation/d/1i4p-sg42FXtEqGVqIZMeFadWSZZ0Lu_CpoqEafkMfy4/edit#slide=id.gd8dafc0d0d_0_30>`_.
 These slides may contain additional information and/or a more detailed description and use-case.
 
 Currently Available Tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The following tools are released for general use and are expected to be used in the context of on-the-fly information gathering and display.
-Some remain under active development whereas others are considered nearly complete.
+The following tools are readily available for general use and are expected to be utilized in the context of on-the-fly information gathering and display.
+Some of these applications remain under active development, whereas others are considered to be nearly completed.
 
 .. _LOVE:
 
@@ -209,7 +208,7 @@ The tool is currently deployed at SLAC for camera construction, and on the summi
 Engineering Facilities Database and Large File Annex
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-The `Engineering Facilities Database (EFD) <https://sqr-034.lsst.io/#introduction>`_ records all commands, events, and telemetry sent over the DDS control network.
+The `Engineering Facilities Database (EFD) <https://sqr-034.lsst.io/#introduction>`_ records all data sent by components over the DDS control network.
 This content essentially tracks the observatory state as a function of time and is very useful in diagnosing issues and understanding (both desired and undesired) operational behaviours.
 The database is best queried using the `EFD client <https://efd-client.lsst.io/>`_ from the `Nublado (Jupyter Notebook) Interface`_ (or any python-based method/script) when making custom plots.
 Instructions on how to access the EFD, and specifically the other instances of the data, are found in `SQR-034 <https://sqr-034.lsst.io/#efd-deployments>`_.
@@ -224,8 +223,10 @@ An example of this would be the `Papermill Executed Parameterized Notebooks`_.
 Chronograf
 ''''''''''
 
-The `summit-based Chronograf interface <https://chronograf-summit-efd.lsst.codes/>`_ (VPN required) provides a user-friendly graphical interface to the each `deployed instance of the EFD <https://sqr-034.lsst.io/#efd-deployments>`_.
-It is particularily useful for creating visualization dashboards to show the current status of the observatory when the LOVE functionality is either not yet functional or simply not planned to be implemented.
+Chronograf is a tool that provides a user-friendly graphical interface to each `deployed instance of the EFD <https://sqr-034.lsst.io/#efd-deployments>`_.
+During operations, observers will use the `summit instance <https://chronograf-summit-efd.lsst.codes/>`_ (VPN required).
+It is particularly useful for quick and simple analysis as well as for creating dashboards to show a specific information about the status of the observatory; especially when a similar functionality is not available in LOVE.
+
 It is not well suited for complex queries or figures and previous queries/plots are not easily replicated.
 Furthermore, it always displays the last event seen.
 Therefore if a Controllable SAL Component (CSC) crashes, it will always show the last published state.
@@ -312,7 +313,7 @@ Deliverable 4: Augmenting Current and Adding New Functionalities
 
 .. note:: 
 
-   The deliverable description from the `charge`_ is in the note below to ease readability 
+   The deliverable description from the `charge`_ has been directly copied here to ease readability.
 
    1. A mapping of the use-cases into the currently available systems, clearly identifying where new functionality is required.
 
@@ -478,7 +479,7 @@ Deliverable 5: Prioritized Task List and Delivery Milestones
 
 .. note:: 
 
-   The deliverable description from the `charge`_ is in the note below to ease readability 
+   The deliverable description from the `charge`_ has been directly copied here to ease readability.
 
    1.  A prioritized list of tasks to build-out the new functionalities with recommended end-dates. 
        - These dates shall correspond to integration milestones.
@@ -487,6 +488,8 @@ Deliverable 5: Prioritized Task List and Delivery Milestones
 This section is not yet completed.
 In the final version, a prioritized list of required functionalities will be presented.
 Note that the requirements are already prioritized to a degree and will help develop this list.
+Furthermore, an single list for prioritization may not be the best deliverable as many of the efforts can be pursued in parrallel.
+This is especially true when comparing tasks such as the Catcher CSC development and updates to the Camera Visualization Tool.
 
 The development of the Catcher is the highest priority item as it is required to develop the on-the-fly analysis framework and will take time to produce.
 
