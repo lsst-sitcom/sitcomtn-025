@@ -62,7 +62,7 @@ By analyzing the use-cases and exploring how they would be accomplished using ou
 However, there exist critical gaps that require new software, designation of adopted packages or technologies, and the production of documentation such that users can interact with the system efffectively.
 
 A new CSC (Controllable SAL Component) will need to be developed to handle the creation and management of analysis tasks as well as the alerting of newly created artifacts to users.
-A design and scope estimate for this CSC has been developed and all the information is ready to support the filing of an LCR if required.
+A design and scope estimate for this CSC has been developed and nearly all the information is ready to support the filing of an LCR, if required.
 On-the-fly analysis tasks will produce reports that require a diversity of visualizations to facilitate monitoring, characterizing, and debugging the system.
 After exploring several options, it is recommended that dynamic figures that are to be embedded into the LOVE system should use the Bokeh Visualization Library to create an application which can then be deployed using Kubernetes.
 The display of images for on-the-fly analysis is most easily accomplished using the Camera Visualization Tool.
@@ -232,7 +232,6 @@ For these reason (and many others), it is not an appropriate substitute for a tr
 Watcher
 '''''''
 
-The `Watcher CSC <https://ts-watcher.lsst.io/>`_ monitors control components listening for data that signals an alarm to the observer.
 The Watcher CSC <https://ts-watcher.lsst.io/>_ monitors data from multiple sources and publishes alarm events to DDS depending on predefined conditions.
 Although it is currently fed mainly with DDS data published by CSCs, it does has the capability to listen to other external data streams.
 Alarms are composed by a set of "rules" that are defined and added to the application software package.
@@ -263,7 +262,7 @@ Scripts are also unable to display visualizations.
 OCPS
 ''''
 The `Observatory Controlled Pipeline Service (OCPS) <https://dmtn-133.lsst.io/>`_ is a CSC that allows observers (and SAL Scripts) to execute pipeTasks to perform data reductions and analyses.
-The CSC runs on the summit but the data processing is currently running at the base on the commissioning cluster (although it may be relocated to the summit).
+The CSC runs on the summit but the data processing is currently running on the commissioning cluster at the base (although it may be relocated to the summit).
 The OCPS is not a display tool, but can be used to produce artifacts (such as images, spectra etc) that observers want to display.
 The current scope of this service is to only provide image-related processing.
 It cannot currently query the EFD.
@@ -286,7 +285,8 @@ faro
    Link to github repo:
    https://github.com/lsst/faro
 
-`faro <https://pipelines.lsst.io/v/daily/modules/lsst.faro/index.html>`_ is a framework for automatically and efficiently computing scientific performance metrics on the outputs of the LSST Science Pipelines for units of data of varying granularity, ranging from single-detector to full-survey summary statistics, and persists the results as scalar metric values alongside the input data products in the same butler repo.
+`faro <https://pipelines.lsst.io/v/daily/modules/lsst.faro/index.html>`_ is a framework for automatically and efficiently computing scientific performance metrics on the outputs of the LSST Science Pipelines. 
+It supports multiple units of data of varying granularity, ranging from single-detector to full-survey summary statistics, and persists the results as scalar metric values alongside the input data products in the same butler repo.
 
 In the "first-look analysis" context, it is intended that faro would be run as an afterburner to the `OCPS`_ and `Prompt Processing`_ (run automatically as part of the same pipeline) and would compute scalar metrics to quantify the performance of individual visits as they are acquired. 
 For example, faro could be used to estimate the effective depth of individual images by computing the flux of a point source that would be measured with signal-to-noise of 10, or to measure variations in effective depth across the focal plane that would be indicative of variable atmosphere transparency. 
@@ -344,7 +344,7 @@ The items for this deliverable have been separated into two areas:
 This working group also created a proof-of-concept of the critcal implementation recommendations and found them to be successful in satisfying the requirements and being relatively straightforward to implement.
 Details are found in the `Proof-of-concept Demonstrations`_ section.
 
-One should also note that there were functionalities that that group found to be critical to the success of commissioning, but not directly for on-the-fly applications, which therefore resulted in the requirement being out-of-scope. 
+One should also note that there were functionalities that the group found to be critical to the success of commissioning, but not directly for on-the-fly applications, which therefore resulted in the requirement being out-of-scope. 
 These types of issues are a grouped into the `Other Findings and Identified Issues`_ and should be strongly considered for implementation as part of the change requests that will result from this charge.
 
 
@@ -406,15 +406,15 @@ Bokeh Plotting Applications
 
 Multiple plotting packages were considered before ultimately settling on the `Bokeh Visualization Library <https://bokeh.org/>`_.
 The majority of Python users are familiar with matplotlib and therefore finding a system to support this was the preferred option.
-However, matplotlib is very limited with regards to the creation of dynamic plots, for this reason the packages of vega-lite and Bokeh were considered.
+However, matplotlib is very limited with regards to the creation of interactive and dynamic web-embedded plots, for this reason the packages of vega-lite and Bokeh were considered.
 Both of these systems could be directly integrated into the LOVE framework with the currently existing functionality.
 Vega-lite is able to create apps to embed on webpages, however, Vega-Lite does not expose the handles for more sophisticated call-back actions that go beyond the plotting itself. 
-This was the most significant inadequacy of Vega-lite however, the capabilities of vega-lite are also limited and certain use-cases required the use of Vega, which means ultimately working javaScript; to which very few people on the project have familiarity.
+This was the most significant inadequacy of Vega-lite, however, the capabilities of vega-lite are also limited and certain use-cases required the use of Vega, which means ultimately working with javaScript; to which very few people on the project have familiarity.
 Based on the evaluation of the use-cases Bokeh was the preferred solution to support all of our requirements (see :ref:`pg-D2-Figure_Generation_Requirements`)
 Furthermore, it is already familiar to certain people on the project and can be easily integrated into our current system design.
 
 Bokeh Applications are extremely flexible in design and can render data from multiple sources if configured to do so.
-This includes SAL events, Butler served information, or files from the LFA.
+This includes SAL events, EFD queries, Butler served information, or files from the LFA.
 The apps can then create dynamic (or static) plots, display images, or even be setup to send commands to move the telescope based on a calculation (e.g. offsetting to a star).
 One major advantage of Bokeh is that the very high majority of the application can be developed inside a notebook.
 Once functioning as expected, it can be ported to a python file with minimal intervention required.
@@ -621,7 +621,7 @@ The examples in the following subsections were proven using data from the summit
 
 .. note::
    Due to the recent power losses at the summit and the loss of the andes cluster, there has been no new data in the last 30-days and therefore they are not presently able to show data.
-   As a result, the documentation each demonstration is sparse.
+   As a result, the documentation for each demonstration is sparse.
    Further screenshots and evidence of their functionality will be provided once data is back on the summit.
 
 
